@@ -26,7 +26,14 @@ test("doctor starts and completes a consultation", async ({ page }) => {
   await loginAsDoctor(page);
 
   const card = page.getByTestId(`patient-card-${START_TARGET}`);
-  const cardVisible = await card.isVisible().catch(() => false);
+  // Wait (not an instant isVisible() check) since the today list fetches
+  // live data asynchronously after navigation.
+  let cardVisible = true;
+  try {
+    await expect(card).toBeVisible({ timeout: 10_000 });
+  } catch {
+    cardVisible = false;
+  }
 
   if (!cardVisible) {
     // Idempotent-tolerant re-run: a prior run of this spec already completed
