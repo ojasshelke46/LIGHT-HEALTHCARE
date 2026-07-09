@@ -4,14 +4,14 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 02-03-PLAN.md
-last_updated: "2026-07-09T19:22:02.655Z"
+last_updated: "2026-07-09T19:33:46.368Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 13
-  completed_plans: 8
-  percent: 62
+  completed_plans: 9
+  percent: 69
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 02 (reception-doctor-flow) — EXECUTING
-Plan: 4 of 8
+Plan: 5 of 8
 Status: Ready to execute
 Last activity: 2026-07-09
 
-Progress: [██████░░░░] 62%
+Progress: [███████░░░] 69%
 
 ## Performance Metrics
 
@@ -60,6 +60,7 @@ Progress: [██████░░░░] 62%
 | Phase 02 P01 | 15min | 3 tasks | 9 files |
 | Phase 02 P02 | 55min | 3 tasks | 6 files |
 | Phase 02 P03 | 25min | 2 tasks | 5 files |
+| Phase 02 P04 | 30min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -89,6 +90,9 @@ Recent decisions affecting current work:
 - [Phase 02]: 02-02: Deferred marking RECEP-01/02/03 complete -- queue/row code is correct and typechecked, but reception-queue.spec.ts is blocked by a confirmed pre-existing Supabase RLS recursion bug (Postgres 54001) scoped to the reception role on staff/patients/appointments reads, reproduced via direct REST calls independent of any app code; doctor role unaffected by identical query shapes
 - [Phase 02]: 02-03: On successful patient registration, route to the new patient's detail page (router.push) rather than re-running the current search -- tighter registration-to-confirmation loop for reception desk staff
 - [Phase 02]: 02-03: Independently reconfirmed the RLS recursion fix (from 02-02) via direct reception-role REST calls -- search, appointment/visit joins, duplicate-phone 23505, and insert all verified against live seeded data before marking RECEP-04/05 complete
+- [Phase 02]: 02-04: PaymentForm props kept to { visitId, patientId, onRecorded } per Task 2's explicit signature -- no amountHint prop exists since there's no fee-schedule data source to populate it
+- [Phase 02]: 02-04: Billing list uses on-mount + after-mutation fetch (no useRealtimeList) -- billing is a single-receptionist counter action, not a shared live view like the queue/doctor-today lists
+- [Phase 02]: 02-04: Live-verified reception-role RLS on payments (read via D-25 join, insert+delete round-trip) via direct REST before app-level testing -- no RLS denial; also confirmed full record-payment UI flow against live seeded data (d0..05 needs-billing -> paid) via Playwright
 
 ### Pending Todos
 
@@ -108,6 +112,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-09T19:21:34.595Z
+Last session: 2026-07-09T19:33:46.362Z
 Stopped at: Completed 02-03-PLAN.md
 Resume file: None

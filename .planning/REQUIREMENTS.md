@@ -23,7 +23,7 @@ Source: HMS build brief (2026-07-09). Auto-scoped: every feature in the brief is
 - [ ] **RECEP-03**: Reception can filter the queue by status tabs and search by patient name/phone; stats cards show today totals (total, checked-in, waiting, completed)
 - [x] **RECEP-04**: Reception can search patients by name/phone/ABHA and open a patient's info + appointment/visit history
 - [x] **RECEP-05**: Reception can register a new patient (name, dob, phone, email, address, ABHA) with zod validation
-- [ ] **RECEP-06**: Reception sees today's completed visits needing billing and can record a payment (amount, method) with pending/paid badges
+- [x] **RECEP-06**: Reception sees today's completed visits needing billing and can record a payment (amount, method) with pending/paid badges
 
 ### Doctor
 
