@@ -80,4 +80,36 @@ Source: HMS build brief (2026-07-09). Auto-scoped: every feature in the brief is
 
 | REQ-ID | Phase |
 |--------|-------|
-| — | — |
+| AUTH-01 | Phase 1 |
+| AUTH-02 | Phase 1 |
+| AUTH-03 | Phase 1 |
+| SHELL-01 | Phase 1 |
+| SHELL-02 | Phase 1 |
+| RECEP-01 | Phase 2 |
+| RECEP-02 | Phase 2 |
+| RECEP-03 | Phase 2 |
+| RECEP-04 | Phase 2 |
+| RECEP-05 | Phase 2 |
+| RECEP-06 | Phase 2 |
+| DOC-01 | Phase 2 |
+| DOC-02 | Phase 2 |
+| DOC-03 | Phase 2 |
+| DOC-04 | Phase 2 |
+| DOC-05 | Phase 2 |
+| DIAG-01 | Phase 3 |
+| DIAG-02 | Phase 3 |
+| DIAG-03 | Phase 3 |
+| PHARM-01 | Phase 3 |
+| PHARM-02 | Phase 3 |
+| PHARM-03 | Phase 3 |
+| PHARM-04 | Phase 3 |
+| AUTH-04 | Phase 4 |
+| MOB-01 | Phase 4 |
+| MOB-02 | Phase 4 |
+| MOB-03 | Phase 4 |
+| MOB-04 | Phase 4 |
+| MOB-05 | Phase 4 |
+| AI-01 | Phase 5 |
+| AI-02 | Phase 5 |
+| AI-03 | Phase 5 |
+| AI-04 | Phase 5 |
