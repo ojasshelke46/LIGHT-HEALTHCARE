@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-03-PLAN.md
-last_updated: "2026-07-09T19:33:46.368Z"
+stopped_at: Completed 02-05-PLAN.md
+last_updated: "2026-07-09T19:40:41.157Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 13
-  completed_plans: 9
-  percent: 69
+  completed_plans: 10
+  percent: 77
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 02 (reception-doctor-flow) — EXECUTING
-Plan: 5 of 8
+Plan: 6 of 8
 Status: Ready to execute
 Last activity: 2026-07-09
 
-Progress: [███████░░░] 69%
+Progress: [████████░░] 77%
 
 ## Performance Metrics
 
@@ -61,6 +61,7 @@ Progress: [███████░░░] 69%
 | Phase 02 P02 | 55min | 3 tasks | 6 files |
 | Phase 02 P03 | 25min | 2 tasks | 5 files |
 | Phase 02 P04 | 30min | 2 tasks | 4 files |
+| Phase 02 P05 | 15min | 1 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -93,6 +94,7 @@ Recent decisions affecting current work:
 - [Phase 02]: 02-04: PaymentForm props kept to { visitId, patientId, onRecorded } per Task 2's explicit signature -- no amountHint prop exists since there's no fee-schedule data source to populate it
 - [Phase 02]: 02-04: Billing list uses on-mount + after-mutation fetch (no useRealtimeList) -- billing is a single-receptionist counter action, not a shared live view like the queue/doctor-today lists
 - [Phase 02]: 02-04: Live-verified reception-role RLS on payments (read via D-25 join, insert+delete round-trip) via direct REST before app-level testing -- no RLS denial; also confirmed full record-payment UI flow against live seeded data (d0..05 needs-billing -> paid) via Playwright
+- [Phase 02]: 02-05: Verified DOC-01 end-to-end (login as doctor, live checked-in/in-consultation cards, correct badges/complaint/hrefs) with a scratch uncommitted Playwright spec before marking the requirement complete, matching the 02-03/02-04 precedent
 
 ### Pending Todos
 
@@ -112,6 +114,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-09T19:33:46.362Z
-Stopped at: Completed 02-03-PLAN.md
+Last session: 2026-07-09T19:40:41.151Z
+Stopped at: Completed 02-05-PLAN.md
 Resume file: None
