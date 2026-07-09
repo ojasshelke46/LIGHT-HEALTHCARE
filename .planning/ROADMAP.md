@@ -31,7 +31,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Every portal page renders inside the shared DashboardLayout: collapsible sidebar (hamburger on mobile), role accent color, header with staff name and logout
   4. Staff can log out from the header on any page and return to login
   5. Every page shows a skeleton while loading, an error state on failure, and an empty state when there are no rows
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [ ] 01-01-PLAN.md — Foundation: shared-types enum fix, deps, ROLE_THEME + formatIST, failing login e2e (walking-skeleton scaffold)
+- [ ] 01-02-PLAN.md — Login slice: hand-rolled primitives + zod/sonner login + Toaster
+- [ ] 01-03-PLAN.md — Shell slice: DashboardLayout, role layouts, logout, PortalShell removed
+- [ ] 01-04-PLAN.md — Async conventions (loading/error/empty) + remaining primitives
+- [ ] 01-05-PLAN.md — Human-verify checkpoint (tablet-first shell)
 **UI hint**: yes
 
 ### Phase 2: Reception & Doctor Flow
@@ -95,7 +101,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Staff Auth & Shared Shell | 0/TBD | Not started | - |
+| 1. Staff Auth & Shared Shell | 0/5 | Not started | - |
 | 2. Reception & Doctor Flow | 0/TBD | Not started | - |
 | 3. Diagnostics & Pharmacy Flow | 0/TBD | Not started | - |
 | 4. Mobile Patient App | 0/TBD | Not started | - |
