@@ -126,3 +126,30 @@ None - no external service configuration required.
 ---
 *Phase: 01-staff-auth-shared-shell*
 *Completed: 2026-07-09*
+
+## Self-Check: PASSED
+
+All created files confirmed present on disk:
+- FOUND: apps/web/src/components/empty-state.tsx
+- FOUND: apps/web/src/components/portal-loading.tsx
+- FOUND: apps/web/src/components/portal-error.tsx
+- FOUND: apps/web/src/app/reception/loading.tsx
+- FOUND: apps/web/src/app/reception/error.tsx
+- FOUND: apps/web/src/app/doctor/loading.tsx
+- FOUND: apps/web/src/app/doctor/error.tsx
+- FOUND: apps/web/src/app/diagnostics/loading.tsx
+- FOUND: apps/web/src/app/diagnostics/error.tsx
+- FOUND: apps/web/src/app/pharmacy/loading.tsx
+- FOUND: apps/web/src/app/pharmacy/error.tsx
+- FOUND: apps/web/src/app/admin/loading.tsx
+- FOUND: apps/web/src/app/admin/error.tsx
+- FOUND: apps/web/src/components/ui/tabs.tsx
+- FOUND: apps/web/src/components/ui/textarea.tsx
+- FOUND: apps/web/src/components/ui/select.tsx
+- FOUND: apps/web/src/components/ui/table.tsx
+
+All commit hashes confirmed present in git history:
+- FOUND: 22dd015 (Task 1)
+- FOUND: 02eca71 (Task 2)
+- FOUND: b5ae283 (Task 3)
+- FOUND: 92e87cf (docs: SUMMARY.md)
