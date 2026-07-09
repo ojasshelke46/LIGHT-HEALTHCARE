@@ -9,10 +9,12 @@
 import type { LucideIcon } from "lucide-react";
 import {
   LayoutList,
-  Stethoscope,
   FlaskConical,
   Pill,
   LayoutDashboard,
+  Users,
+  Receipt,
+  CalendarClock,
 } from "lucide-react";
 import type { StaffRole } from "@light/shared-types";
 
@@ -34,7 +36,11 @@ export const ROLE_THEME: Record<StaffRole, RoleTheme> = {
     accentBar: "bg-blue-600",
     accentText: "text-blue-700",
     badge: "bg-blue-100 text-blue-800",
-    nav: [{ href: "/reception", label: "Queue", icon: LayoutList }],
+    nav: [
+      { href: "/reception", label: "Queue", icon: LayoutList },
+      { href: "/reception/patients", label: "Patients", icon: Users },
+      { href: "/reception/billing", label: "Billing", icon: Receipt },
+    ],
   },
   doctor: {
     label: "Doctor",
@@ -42,7 +48,10 @@ export const ROLE_THEME: Record<StaffRole, RoleTheme> = {
     accentBar: "bg-purple-600",
     accentText: "text-purple-700",
     badge: "bg-purple-100 text-purple-800",
-    nav: [{ href: "/doctor", label: "Patients", icon: Stethoscope }],
+    nav: [
+      { href: "/doctor", label: "Today's Patients", icon: CalendarClock },
+      { href: "/doctor/patients", label: "All Patients", icon: Users },
+    ],
   },
   lab_tech: {
     label: "Diagnostics",
