@@ -36,7 +36,7 @@ Plans:
 - [x] 01-01-PLAN.md — Foundation: shared-types enum fix, deps, ROLE_THEME + formatIST, failing login e2e (walking-skeleton scaffold)
 - [x] 01-02-PLAN.md — Login slice: hand-rolled primitives + zod/sonner login + Toaster
 - [x] 01-03-PLAN.md — Shell slice: DashboardLayout, role layouts, logout, PortalShell removed
-- [ ] 01-04-PLAN.md — Async conventions (loading/error/empty) + remaining primitives
+- [x] 01-04-PLAN.md — Async conventions (loading/error/empty) + remaining primitives
 - [ ] 01-05-PLAN.md — Human-verify checkpoint (tablet-first shell)
 **UI hint**: yes
 

@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-03-PLAN.md
-last_updated: "2026-07-09T07:12:09.938Z"
+stopped_at: Completed 01-04-PLAN.md
+last_updated: "2026-07-09T07:18:28.756Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 5
-  completed_plans: 3
-  percent: 60
+  completed_plans: 4
+  percent: 80
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 01 (staff-auth-shared-shell) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-07-09
 
-Progress: [██████░░░░] 60%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [██████░░░░] 60%
 | Phase 01 P01 | 12min | 3 tasks | 7 files |
 | Phase 01 P02 | 8min | 2 tasks | 7 files |
 | Phase 01 P03 | 10min | 3 tasks | 17 files |
+| Phase 01 P04 | 6min | 3 tasks | 17 files |
 
 ## Accumulated Context
 
@@ -73,6 +74,8 @@ Recent decisions affecting current work:
 - [Phase 01]: 01-02: Documented seeded staff credentials (doctor@test.com / reception@test.com, Test1234!) return invalid_credentials from Supabase Auth in this environment -- not fixable from this plan's file scope (no working service-role key); logged as Issue, requires Supabase-side verification before Plan 03/05 e2e re-checks
 - [Phase 01]: 01-03: Cast the staff .select() result to StaffIdentity after the null-guard in lib/staff.ts, mirroring the existing middleware.ts workaround for the same PostgREST TS-inference quirk
 - [Phase 01]: 01-03: Confirmed the previously-blocking seeded credentials (doctor@test.com / reception@test.com, Test1234!) now authenticate -- fixed upstream in the Supabase project; walking-skeleton e2e (login.spec.ts) passes all 3 specs
+- [Phase 01]: 01-04: Implemented SelectItem literally as `export const SelectItem = "option" as const` per the plan's "option"-style convenience wording -- a typed string-literal alias, no wrapper component
+- [Phase 01]: 01-04: Table sub-components use forwardRef uniformly (not just Textarea/Select) for API consistency across the primitive library and to ease a future radix swap
 
 ### Pending Todos
 
@@ -92,6 +95,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-09T07:12:09.932Z
-Stopped at: Completed 01-03-PLAN.md
+Last session: 2026-07-09T07:18:28.750Z
+Stopped at: Completed 01-04-PLAN.md
 Resume file: None

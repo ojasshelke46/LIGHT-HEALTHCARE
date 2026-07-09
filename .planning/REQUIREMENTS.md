@@ -14,7 +14,7 @@ Source: HMS build brief (2026-07-09). Auto-scoped: every feature in the brief is
 ### Shared Shell
 
 - [x] **SHELL-01**: All portal pages render inside a DashboardLayout: collapsible sidebar (hamburger on mobile), role-specific nav + accent color (reception blue, doctor purple, diagnostics amber, pharmacy green, admin gray), header with portal name, staff name from DB, logout
-- [ ] **SHELL-02**: Every page shows a skeleton while loading, an error state on failure, and an empty state when no rows
+- [x] **SHELL-02**: Every page shows a skeleton while loading, an error state on failure, and an empty state when no rows
 
 ### Reception
 
