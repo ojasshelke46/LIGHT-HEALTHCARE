@@ -2,26 +2,55 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { z } from "zod";
+import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+const schema = z.object({
+  email: z.string().email("Enter a valid email"),
+  password: z.string().min(1, "Password is required"),
+});
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [fieldError, setFieldError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-    const supabase = createClient();
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setLoading(false);
-    if (error) {
-      setError(error.message);
+    setFieldError(null);
+
+    const parsed = schema.safeParse({ email, password });
+    if (!parsed.success) {
+      setFieldError(parsed.error.issues[0]?.message ?? "Invalid input");
       return;
     }
+
+    setLoading(true);
+    const { error } = await createClient().auth.signInWithPassword({
+      email: parsed.data.email,
+      password: parsed.data.password,
+    });
+    setLoading(false);
+
+    if (error) {
+      // Generic message only — never surface the raw Supabase error text,
+      // which could leak whether an account exists (info disclosure).
+      toast.error("Invalid email or password");
+      return;
+    }
+
     // Middleware reads the role and redirects "/" to the role home.
     router.replace("/");
     router.refresh();
@@ -29,39 +58,55 @@ export default function LoginPage() {
 
   return (
     <main className="flex min-h-screen items-center justify-center p-6">
-      <form
-        onSubmit={onSubmit}
-        className="w-full max-w-sm space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm"
-      >
-        <h1 className="text-lg font-semibold">Staff sign in</h1>
-        <input
-          type="email"
-          required
-          placeholder="you@hospital.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
-        />
-        <input
-          type="password"
-          required
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
-        />
-        {error && <p className="text-sm text-red-600">{error}</p>}
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700 disabled:opacity-50"
-        >
-          {loading ? "Signing in…" : "Sign in"}
-        </button>
-        <p className="text-xs text-slate-500">
-          Test: doctor@test.com / reception@test.com — Test1234!
-        </p>
-      </form>
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle>Staff sign in</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={onSubmit} className="space-y-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                data-testid="login-email"
+                placeholder="you@hospital.com"
+                autoComplete="username"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                data-testid="login-password"
+                placeholder="Password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            {fieldError && (
+              <p className="text-sm text-red-600" role="alert">
+                {fieldError}
+              </p>
+            )}
+            <Button
+              type="submit"
+              data-testid="login-submit"
+              disabled={loading}
+              className="w-full"
+            >
+              {loading ? "Signing in…" : "Sign in"}
+            </Button>
+            <p className="text-xs text-slate-500">
+              Test: doctor@test.com / reception@test.com — Test1234!
+            </p>
+          </form>
+        </CardContent>
+      </Card>
     </main>
   );
 }
