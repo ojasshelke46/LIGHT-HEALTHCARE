@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 01-04-PLAN.md
-last_updated: "2026-07-09T07:18:28.756Z"
+status: verifying
+stopped_at: Completed 01-05-PLAN.md (Phase 1 complete)
+last_updated: "2026-07-09T07:27:55.299Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 5
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 5
-  completed_plans: 4
-  percent: 80
+  completed_plans: 5
+  percent: 100
 ---
 
 # Project State
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 Phase: 01 (staff-auth-shared-shell) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-09
 
-Progress: [████████░░] 80%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -56,6 +56,7 @@ Progress: [████████░░] 80%
 | Phase 01 P02 | 8min | 2 tasks | 7 files |
 | Phase 01 P03 | 10min | 3 tasks | 17 files |
 | Phase 01 P04 | 6min | 3 tasks | 17 files |
+| Phase 01 P05 | 20min | 1 tasks | 0 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,8 @@ Recent decisions affecting current work:
 - [Phase 01]: 01-03: Confirmed the previously-blocking seeded credentials (doctor@test.com / reception@test.com, Test1234!) now authenticate -- fixed upstream in the Supabase project; walking-skeleton e2e (login.spec.ts) passes all 3 specs
 - [Phase 01]: 01-04: Implemented SelectItem literally as `export const SelectItem = "option" as const` per the plan's "option"-style convenience wording -- a typed string-literal alias, no wrapper component
 - [Phase 01]: 01-04: Table sub-components use forwardRef uniformly (not just Textarea/Select) for API consistency across the primitive library and to ease a future radix swap
+- [Phase 01]: 01-05: Auto-approved the human-verify checkpoint (--auto chain) after exhaustive automated proxies (grep + committed e2e + supplemental scratch Playwright spec) confirmed all 5 Phase-1 success criteria; deferred 3 genuinely-visual items (tablet layout feel, drawer animation, throttled-network skeleton flash) to human review
+- [Phase 01]: 01-05: Documented (not fixed, per checkpoint task's no-code-change mandate) that the login form lacks noValidate, so native HTML5 email validation shadows the zod inline-alert message for malformed emails; candidate for gap-closure
 
 ### Pending Todos
 
@@ -95,6 +98,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-09T07:18:28.750Z
-Stopped at: Completed 01-04-PLAN.md
+Last session: 2026-07-09T07:27:55.293Z
+Stopped at: Completed 01-05-PLAN.md (Phase 1 complete)
 Resume file: None

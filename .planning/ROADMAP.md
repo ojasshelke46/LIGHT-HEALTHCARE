@@ -37,7 +37,7 @@ Plans:
 - [x] 01-02-PLAN.md — Login slice: hand-rolled primitives + zod/sonner login + Toaster
 - [x] 01-03-PLAN.md — Shell slice: DashboardLayout, role layouts, logout, PortalShell removed
 - [x] 01-04-PLAN.md — Async conventions (loading/error/empty) + remaining primitives
-- [ ] 01-05-PLAN.md — Human-verify checkpoint (tablet-first shell)
+- [x] 01-05-PLAN.md — Human-verify checkpoint (tablet-first shell)
 **UI hint**: yes
 
 ### Phase 2: Reception & Doctor Flow
