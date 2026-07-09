@@ -51,7 +51,16 @@ Plans:
   3. Reception can record a payment (amount, method) for a completed visit and see pending/paid status badges
   4. Doctor's checked-in/in-consultation list updates live, and doctor can open a consultation view with history tabs, record complaint/diagnosis/notes, add test orders and prescriptions, and complete the visit with optimistic updates
   5. Doctor can browse all patients they've seen with full cross-visit history
-**Plans**: TBD
+**Plans**: 8 plans
+Plans:
+- [ ] 02-01-PLAN.md — Foundation: dev seed, useRealtimeList hook (D-15/D-16), D-31 nav, status/age/IST helpers
+- [ ] 02-02-PLAN.md — Reception live queue: realtime board, tabs/search/stats, optimistic check-in + no-show, queue e2e
+- [ ] 02-03-PLAN.md — Patient registry: injection-safe search, zod register Sheet, patient detail with history
+- [ ] 02-04-PLAN.md — Billing: today's completed visits, needs-billing/paid badges, record-payment Sheet
+- [ ] 02-05-PLAN.md — Doctor today: live checked-in/in-consultation cards linking to consult
+- [ ] 02-06-PLAN.md — Consultation: patient header + history tabs, Start/Complete visit lifecycle (D-17/D-18), consult e2e
+- [ ] 02-07-PLAN.md — Consult orders + prescriptions: add/remove test orders, medicine combobox prescriptions, add/remove e2e
+- [ ] 02-08-PLAN.md — Doctor all-patients: searchable seen-patients list + cross-visit history grouped by visit
 **UI hint**: yes
 
 ### Phase 3: Diagnostics & Pharmacy Flow
@@ -102,7 +111,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Staff Auth & Shared Shell | 0/5 | Not started | - |
-| 2. Reception & Doctor Flow | 0/TBD | Not started | - |
+| 2. Reception & Doctor Flow | 0/8 | Planned | - |
 | 3. Diagnostics & Pharmacy Flow | 0/TBD | Not started | - |
 | 4. Mobile Patient App | 0/TBD | Not started | - |
 | 5. AI Services | 0/TBD | Not started | - |
