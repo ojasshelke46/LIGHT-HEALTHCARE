@@ -55,7 +55,7 @@ Plans:
 Plans:
 - [x] 02-01-PLAN.md — Foundation: dev seed, useRealtimeList hook (D-15/D-16), D-31 nav, status/age/IST helpers
 - [x] 02-02-PLAN.md — Reception live queue: realtime board, tabs/search/stats, optimistic check-in + no-show, queue e2e
-- [ ] 02-03-PLAN.md — Patient registry: injection-safe search, zod register Sheet, patient detail with history
+- [x] 02-03-PLAN.md — Patient registry: injection-safe search, zod register Sheet, patient detail with history
 - [ ] 02-04-PLAN.md — Billing: today's completed visits, needs-billing/paid badges, record-payment Sheet
 - [ ] 02-05-PLAN.md — Doctor today: live checked-in/in-consultation cards linking to consult
 - [ ] 02-06-PLAN.md — Consultation: patient header + history tabs, Start/Complete visit lifecycle (D-17/D-18), consult e2e

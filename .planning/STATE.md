@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Completed 02-02-PLAN.md (blocker: reception-role RLS recursion bug logged, see SUMMARY)"
-last_updated: "2026-07-09T19:08:01.900Z"
+stopped_at: Completed 02-03-PLAN.md
+last_updated: "2026-07-09T19:22:02.655Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 13
-  completed_plans: 7
-  percent: 54
+  completed_plans: 8
+  percent: 62
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 02 (reception-doctor-flow) — EXECUTING
-Plan: 3 of 8
+Plan: 4 of 8
 Status: Ready to execute
 Last activity: 2026-07-09
 
-Progress: [█████░░░░░] 54%
+Progress: [██████░░░░] 62%
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Progress: [█████░░░░░] 54%
 | Phase 01 P05 | 20min | 1 tasks | 0 files |
 | Phase 02 P01 | 15min | 3 tasks | 9 files |
 | Phase 02 P02 | 55min | 3 tasks | 6 files |
+| Phase 02 P03 | 25min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -86,6 +87,8 @@ Recent decisions affecting current work:
 - [Phase 02]: 02-01: Reverted requirements.mark-complete's premature check-off of RECEP-01/DOC-01 -- this plan is foundation-only (seed/hook/nav/helpers), no queue or doctor-today page exists yet; deferred to 02-02/02-05 respectively, matching the Phase-1 AUTH-02/SHELL-01 precedent
 - [Phase 02]: 02-02: Bumped @supabase/ssr 0.6.1 -> ^0.10.3 (Rule 3) -- 0.6.1's createBrowserClient/createServerClient don't match the resolved supabase-js 2.110.1's newer 5-generic SupabaseClient signature, which silently collapsed every table's Update row type to 'never' and broke .update() typechecking repo-wide
 - [Phase 02]: 02-02: Deferred marking RECEP-01/02/03 complete -- queue/row code is correct and typechecked, but reception-queue.spec.ts is blocked by a confirmed pre-existing Supabase RLS recursion bug (Postgres 54001) scoped to the reception role on staff/patients/appointments reads, reproduced via direct REST calls independent of any app code; doctor role unaffected by identical query shapes
+- [Phase 02]: 02-03: On successful patient registration, route to the new patient's detail page (router.push) rather than re-running the current search -- tighter registration-to-confirmation loop for reception desk staff
+- [Phase 02]: 02-03: Independently reconfirmed the RLS recursion fix (from 02-02) via direct reception-role REST calls -- search, appointment/visit joins, duplicate-phone 23505, and insert all verified against live seeded data before marking RECEP-04/05 complete
 
 ### Pending Todos
 
@@ -93,7 +96,7 @@ None yet.
 
 ### Blockers/Concerns
 
-- Supabase RLS recursion bug (Postgres 54001 'stack depth limit exceeded') scoped to the reception staff role on staff/patients/appointments SELECT — blocks 02-02's e2e verification and will block 02-03 (patients registry)/02-04 (billing) identically since both are reception-role reads. Requires SQL/dashboard access to project rylceydkrydmpysmibba (not available to this executor: no DATABASE_URL, no working service-role key) to inspect pg_policies + current_staff_role()/current_staff_id() and remove the recursive self-query on the protected table (likely needs SECURITY DEFINER). See 02-02-SUMMARY.md 'Verification Blocker' section for full repro.
+None
 
 ## Deferred Items
 
@@ -105,6 +108,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-09T19:08:01.894Z
-Stopped at: Completed 02-02-PLAN.md (blocker: reception-role RLS recursion bug logged, see SUMMARY)
+Last session: 2026-07-09T19:21:34.595Z
+Stopped at: Completed 02-03-PLAN.md
 Resume file: None
