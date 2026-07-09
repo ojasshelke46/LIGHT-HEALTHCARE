@@ -74,9 +74,12 @@ from doc, (values
   -- check-in target
   ('c0000000-0000-0000-0000-000000000001'::uuid, 'a0000000-0000-0000-0000-000000000001'::uuid,
    ((now() at time zone 'Asia/Kolkata')::date + time '10:00') at time zone 'Asia/Kolkata', 'booked'::appointment_status),
-  -- past-slot no-show target
+  -- past-slot no-show target (clamped inside today IST so the row still shows
+  -- on the today-filtered queue even when seeded within 2h after midnight)
   ('c0000000-0000-0000-0000-000000000002'::uuid, 'a0000000-0000-0000-0000-000000000002'::uuid,
-   now() - interval '2 hours', 'booked'::appointment_status),
+   greatest(now() - interval '2 hours',
+            ((now() at time zone 'Asia/Kolkata')::date + time '00:05') at time zone 'Asia/Kolkata'),
+   'booked'::appointment_status),
   -- doctor consult/start target
   ('c0000000-0000-0000-0000-000000000003'::uuid, 'a0000000-0000-0000-0000-000000000001'::uuid,
    ((now() at time zone 'Asia/Kolkata')::date + time '11:00') at time zone 'Asia/Kolkata', 'checked_in'::appointment_status),
