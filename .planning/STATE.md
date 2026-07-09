@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-05-PLAN.md
-last_updated: "2026-07-09T19:40:41.157Z"
+stopped_at: Completed 02-08-PLAN.md (06/07 still pending)
+last_updated: "2026-07-09T19:49:03.685Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 13
-  completed_plans: 10
-  percent: 77
+  completed_plans: 11
+  percent: 85
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 02 (reception-doctor-flow) — EXECUTING
-Plan: 6 of 8
+Plan: 6 of 8 (02-08 also complete, executed out of sequence — see Decisions; 06/07 remain)
 Status: Ready to execute
 Last activity: 2026-07-09
 
-Progress: [████████░░] 77%
+Progress: [█████████░] 85%
 
 ## Performance Metrics
 
@@ -62,6 +62,7 @@ Progress: [████████░░] 77%
 | Phase 02 P03 | 25min | 2 tasks | 5 files |
 | Phase 02 P04 | 30min | 2 tasks | 4 files |
 | Phase 02 P05 | 15min | 1 tasks | 3 files |
+| Phase 02 P08 | 15min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -95,6 +96,9 @@ Recent decisions affecting current work:
 - [Phase 02]: 02-04: Billing list uses on-mount + after-mutation fetch (no useRealtimeList) -- billing is a single-receptionist counter action, not a shared live view like the queue/doctor-today lists
 - [Phase 02]: 02-04: Live-verified reception-role RLS on payments (read via D-25 join, insert+delete round-trip) via direct REST before app-level testing -- no RLS denial; also confirmed full record-payment UI flow against live seeded data (d0..05 needs-billing -> paid) via Playwright
 - [Phase 02]: 02-05: Verified DOC-01 end-to-end (login as doctor, live checked-in/in-consultation cards, correct badges/complaint/hrefs) with a scratch uncommitted Playwright spec before marking the requirement complete, matching the 02-03/02-04 precedent
+- [Phase 02]: 02-08: Doctor all-patients search stays client-side only (no PostgREST filter) since the list is already server-scoped to the doctor's own visits via getStaff() -- removes any search-term injection surface (T-02-23)
+- [Phase 02]: 02-08: Live-verified both the all-patients list query and the nested cross-visit history query (visits->orders->prescriptions/medicines) against the real Supabase project via a doctor-role REST token -- confirmed Rohan Mehta's seeded visit (Viral fever, CBC lab order with result link, Paracetamol prescription) renders exactly as expected, no RLS denial
+- [Phase 02]: 02-08 was executed out of sequence (plans 06/07 -- consultation flow -- have no SUMMARY yet); 02-08 only depends on 02-01 (wave 2, independent of 06/07) so this is safe, but the STATE.md 'Plan: N of 8' counter reflects a simple increment, not true completion order -- 06 and 07 still need to be executed before the phase is fully done
 
 ### Pending Todos
 
@@ -114,6 +118,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-09T19:40:41.151Z
-Stopped at: Completed 02-05-PLAN.md
+Last session: 2026-07-09T19:49:03.679Z
+Stopped at: Completed 02-08-PLAN.md (06/07 still pending)
 Resume file: None

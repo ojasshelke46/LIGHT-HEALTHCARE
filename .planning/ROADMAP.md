@@ -60,7 +60,7 @@ Plans:
 - [x] 02-05-PLAN.md — Doctor today: live checked-in/in-consultation cards linking to consult
 - [ ] 02-06-PLAN.md — Consultation: patient header + history tabs, Start/Complete visit lifecycle (D-17/D-18), consult e2e
 - [ ] 02-07-PLAN.md — Consult orders + prescriptions: add/remove test orders, medicine combobox prescriptions, add/remove e2e
-- [ ] 02-08-PLAN.md — Doctor all-patients: searchable seen-patients list + cross-visit history grouped by visit
+- [x] 02-08-PLAN.md — Doctor all-patients: searchable seen-patients list + cross-visit history grouped by visit
 **UI hint**: yes
 
 ### Phase 3: Diagnostics & Pharmacy Flow
