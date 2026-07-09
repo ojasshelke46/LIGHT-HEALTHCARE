@@ -41,6 +41,8 @@ export function Sidebar({ role, onNavigate, collapsed = false }: SidebarProps) {
               href={item.href}
               onClick={() => onNavigate?.()}
               aria-current={isActive ? "page" : undefined}
+              aria-label={collapsed ? item.label : undefined}
+              title={collapsed ? item.label : undefined}
               className={cn(
                 "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
                 isActive ? theme.navActive : "text-slate-600 hover:bg-slate-100",

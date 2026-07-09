@@ -63,7 +63,7 @@ export default function LoginPage() {
           <CardTitle>Staff sign in</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={onSubmit} className="space-y-4">
+          <form onSubmit={onSubmit} noValidate className="space-y-4">
             <div className="space-y-1.5">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -101,9 +101,11 @@ export default function LoginPage() {
             >
               {loading ? "Signing in…" : "Sign in"}
             </Button>
-            <p className="text-xs text-slate-500">
-              Test: doctor@test.com / reception@test.com — Test1234!
-            </p>
+            {process.env.NODE_ENV === "development" && (
+              <p className="text-xs text-slate-500">
+                Test: doctor@test.com / reception@test.com — Test1234!
+              </p>
+            )}
           </form>
         </CardContent>
       </Card>

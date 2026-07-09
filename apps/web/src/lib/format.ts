@@ -10,6 +10,8 @@ export function formatIST(
   style: "date" | "time" | "datetime" = "datetime",
 ): string {
   const d = typeof input === "string" ? new Date(input) : input;
+  // Fail soft on invalid/empty dates — shared helper must never crash a page.
+  if (Number.isNaN(d.getTime())) return "—";
   const opts: Intl.DateTimeFormatOptions =
     style === "date"
       ? { timeZone: IST, day: "2-digit", month: "short", year: "numeric" }
