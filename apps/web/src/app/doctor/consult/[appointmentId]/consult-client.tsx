@@ -20,7 +20,7 @@
  * below.
  */
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { ClipboardList, FlaskConical, Pill } from "lucide-react";
@@ -146,23 +146,39 @@ export function ConsultClient({
   const ageLabel = age === null ? "N/A" : `${age} yrs`;
   const badge = APPOINTMENT_STATUS_BADGE[status];
 
+  // Start Consultation flips `status` optimistically before its own visit
+  // insert resolves, which makes the Complete button appear immediately —
+  // so Complete can be clicked (by an eager user, or the e2e spec) *before*
+  // Start's insert has committed `visitId` into state. Without
+  // deduplication both callers would race past the `if (visitId)` check
+  // below and insert two visit rows for the same appointment (violates
+  // D-17/D-18 reuse). This ref memoizes the in-flight/settled insert
+  // promise so every concurrent caller within the same mount awaits the
+  // SAME insert instead of starting its own.
+  const visitCreationRef = useRef<Promise<string> | null>(null);
+
   /** Insert a new visit row for this appointment, or reuse one already set (D-17/D-18). */
-  async function ensureVisit(
-    supabase: ReturnType<typeof createClient>,
-  ): Promise<string> {
-    if (visitId) return visitId;
+  function ensureVisit(supabase: ReturnType<typeof createClient>): Promise<string> {
+    if (visitId) return Promise.resolve(visitId);
+    if (visitCreationRef.current) return visitCreationRef.current;
 
-    const { data, error } = await supabase
-      .from("visits")
-      .insert({ appointment_id: appointmentId, patient_id: patient?.id ?? "", doctor_id: doctorId })
-      .select("id")
-      .single();
+    const creation = (async () => {
+      const { data, error } = await supabase
+        .from("visits")
+        .insert({ appointment_id: appointmentId, patient_id: patient?.id ?? "", doctor_id: doctorId })
+        .select("id")
+        .single();
 
-    if (error || !data) {
-      throw error ?? new Error("Visit insert failed");
-    }
-    setVisitId(data.id);
-    return data.id;
+      if (error || !data) {
+        visitCreationRef.current = null; // allow a retry on the next attempt
+        throw error ?? new Error("Visit insert failed");
+      }
+      setVisitId(data.id);
+      return data.id;
+    })();
+
+    visitCreationRef.current = creation;
+    return creation;
   }
 
   async function handleStart() {
