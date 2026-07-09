@@ -6,12 +6,10 @@
  * (see database.types.ts). Hand-maintained domain enums/helpers live here.
  */
 
-export type StaffRole =
-  | "reception"
-  | "doctor"
-  | "lab_tech"
-  | "pharmacist"
-  | "admin";
+import type { Database } from "./database.types";
+
+/** Derived from the generated Database enums — never hand-write these unions. */
+export type StaffRole = Database["public"]["Enums"]["staff_role"];
 
 /** Landing route per role — mirrors the Next.js middleware. */
 export const ROLE_HOME: Record<StaffRole, string> = {
@@ -23,12 +21,7 @@ export const ROLE_HOME: Record<StaffRole, string> = {
 };
 
 export type AppointmentStatus =
-  | "booked"
-  | "checked_in"
-  | "in_consult"
-  | "completed"
-  | "cancelled"
-  | "no_show";
+  Database["public"]["Enums"]["appointment_status"];
 
 // Re-export generated Supabase types once produced.
 export type { Database } from "./database.types";
