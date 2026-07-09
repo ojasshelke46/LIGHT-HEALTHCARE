@@ -1,0 +1,41 @@
+# deps
+node_modules/
+.pnpm-store/
+
+# builds
+.next/
+out/
+dist/
+build/
+
+# turbo
+.turbo/
+
+# typescript build info
+*.tsbuildinfo
+
+# env
+.env
+.env.local
+.env.*.local
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# os / editor
+.DS_Store
+*.pem
+.vscode/
+.idea/
+
+# expo
+.expo/
+web-build/
+
+# python (ai-services)
+__pycache__/
+*.pyc
+.venv/
+venv/
