@@ -53,7 +53,7 @@ Plans:
   5. Doctor can browse all patients they've seen with full cross-visit history
 **Plans**: 8 plans
 Plans:
-- [ ] 02-01-PLAN.md — Foundation: dev seed, useRealtimeList hook (D-15/D-16), D-31 nav, status/age/IST helpers
+- [x] 02-01-PLAN.md — Foundation: dev seed, useRealtimeList hook (D-15/D-16), D-31 nav, status/age/IST helpers
 - [ ] 02-02-PLAN.md — Reception live queue: realtime board, tabs/search/stats, optimistic check-in + no-show, queue e2e
 - [ ] 02-03-PLAN.md — Patient registry: injection-safe search, zod register Sheet, patient detail with history
 - [ ] 02-04-PLAN.md — Billing: today's completed visits, needs-billing/paid badges, record-payment Sheet

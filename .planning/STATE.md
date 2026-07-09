@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 01-05-PLAN.md (Phase 1 complete)
-last_updated: "2026-07-09T07:27:55.299Z"
+status: executing
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-07-09T18:43:20.631Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 5
-  completed_plans: 5
-  percent: 100
+  total_plans: 13
+  completed_plans: 6
+  percent: 46
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** The live patient flow — book → check-in → consult → order tests → dispense → bill — works end-to-end in real time across every role portal without a page refresh.
-**Current focus:** Phase 01 — staff-auth-shared-shell
+**Current focus:** Phase 02 — reception-doctor-flow
 
 ## Current Position
 
-Phase: 01 (staff-auth-shared-shell) — EXECUTING
-Plan: 5 of 5
-Status: Phase complete — ready for verification
+Phase: 02 (reception-doctor-flow) — EXECUTING
+Plan: 2 of 8
+Status: Ready to execute
 Last activity: 2026-07-09
 
-Progress: [██████████] 100%
+Progress: [█████░░░░░] 46%
 
 ## Performance Metrics
 
@@ -57,6 +57,7 @@ Progress: [██████████] 100%
 | Phase 01 P03 | 10min | 3 tasks | 17 files |
 | Phase 01 P04 | 6min | 3 tasks | 17 files |
 | Phase 01 P05 | 20min | 1 tasks | 0 files |
+| Phase 02 P01 | 15min | 3 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -79,6 +80,9 @@ Recent decisions affecting current work:
 - [Phase 01]: 01-04: Table sub-components use forwardRef uniformly (not just Textarea/Select) for API consistency across the primitive library and to ease a future radix swap
 - [Phase 01]: 01-05: Auto-approved the human-verify checkpoint (--auto chain) after exhaustive automated proxies (grep + committed e2e + supplemental scratch Playwright spec) confirmed all 5 Phase-1 success criteria; deferred 3 genuinely-visual items (tablet layout feel, drawer animation, throttled-network skeleton flash) to human review
 - [Phase 01]: 01-05: Documented (not fixed, per checkpoint task's no-code-change mandate) that the login form lacks noValidate, so native HTML5 email validation shadows the zod inline-alert message for malformed emails; candidate for gap-closure
+- [Phase 02]: 02-01: Installed vitest + @testing-library/react + jsdom (first unit-test stack in the repo) to fulfill Task 2's tdd="true" RED/GREEN requirement for useRealtimeList; Playwright e2e config untouched
+- [Phase 02]: 02-01: Verified supabase/seed-dev.sql (create + idempotent re-run) against a disposable local Postgres schema mirroring the generated Database types, since this executor cannot apply SQL to the cloud project rylceydkrydmpysmibba -- orchestrator must apply it before Wave-2 e2e specs
+- [Phase 02]: 02-01: Reverted requirements.mark-complete's premature check-off of RECEP-01/DOC-01 -- this plan is foundation-only (seed/hook/nav/helpers), no queue or doctor-today page exists yet; deferred to 02-02/02-05 respectively, matching the Phase-1 AUTH-02/SHELL-01 precedent
 
 ### Pending Todos
 
@@ -98,6 +102,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-09T07:27:55.293Z
-Stopped at: Completed 01-05-PLAN.md (Phase 1 complete)
+Last session: 2026-07-09T18:42:14.439Z
+Stopped at: Completed 02-01-PLAN.md
 Resume file: None
