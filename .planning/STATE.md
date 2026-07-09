@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-02-PLAN.md
-last_updated: "2026-07-09T07:02:58.456Z"
+stopped_at: Completed 01-03-PLAN.md
+last_updated: "2026-07-09T07:12:09.938Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 5
-  completed_plans: 2
-  percent: 40
+  completed_plans: 3
+  percent: 60
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 01 (staff-auth-shared-shell) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-07-09
 
-Progress: [████░░░░░░] 40%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Progress: [████░░░░░░] 40%
 *Updated after each plan completion*
 | Phase 01 P01 | 12min | 3 tasks | 7 files |
 | Phase 01 P02 | 8min | 2 tasks | 7 files |
+| Phase 01 P03 | 10min | 3 tasks | 17 files |
 
 ## Accumulated Context
 
@@ -70,6 +71,8 @@ Recent decisions affecting current work:
 - [Phase 01]: 01-01: Deferred marking AUTH-02/SHELL-01 complete in REQUIREMENTS.md -- plan is scaffold-only and its own e2e test proves them not-yet-satisfied; will mark complete when 01-03/01-05 make the e2e pass
 - [Phase 01]: 01-02: Confirmed zod v4.4.3's z.string().email() still functions correctly (deprecated alias, not removed) -- used as specified in the plan rather than the newer z.email() helper
 - [Phase 01]: 01-02: Documented seeded staff credentials (doctor@test.com / reception@test.com, Test1234!) return invalid_credentials from Supabase Auth in this environment -- not fixable from this plan's file scope (no working service-role key); logged as Issue, requires Supabase-side verification before Plan 03/05 e2e re-checks
+- [Phase 01]: 01-03: Cast the staff .select() result to StaffIdentity after the null-guard in lib/staff.ts, mirroring the existing middleware.ts workaround for the same PostgREST TS-inference quirk
+- [Phase 01]: 01-03: Confirmed the previously-blocking seeded credentials (doctor@test.com / reception@test.com, Test1234!) now authenticate -- fixed upstream in the Supabase project; walking-skeleton e2e (login.spec.ts) passes all 3 specs
 
 ### Pending Todos
 
@@ -77,7 +80,7 @@ None yet.
 
 ### Blockers/Concerns
 
-- Seeded staff credentials (doctor@test.com / reception@test.com, Test1234!) return 400 invalid_credentials from Supabase Auth -- needs verification/reset via Supabase dashboard (service-role key in .env.local is still a placeholder) before Plan 03/05 can e2e-verify the happy-path login redirect
+None
 
 ## Deferred Items
 
@@ -89,6 +92,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-09T07:02:58.451Z
-Stopped at: Completed 01-02-PLAN.md
+Last session: 2026-07-09T07:12:09.932Z
+Stopped at: Completed 01-03-PLAN.md
 Resume file: None
