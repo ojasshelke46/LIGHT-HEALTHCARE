@@ -2,8 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-export function SignOutButton() {
+export function SignOutButton({ className }: { className?: string }) {
   const router = useRouter();
   async function onClick() {
     await createClient().auth.signOut();
@@ -11,11 +13,16 @@ export function SignOutButton() {
     router.refresh();
   }
   return (
-    <button
+    <Button
+      type="button"
+      variant="outline"
+      size="sm"
       onClick={onClick}
-      className="rounded-md border border-slate-300 px-3 py-1.5 text-sm hover:bg-slate-100"
+      data-testid="sign-out"
+      aria-label="Sign out"
+      className={cn(className)}
     >
       Sign out
-    </button>
+    </Button>
   );
 }
