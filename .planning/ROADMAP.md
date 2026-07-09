@@ -33,7 +33,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. Every page shows a skeleton while loading, an error state on failure, and an empty state when there are no rows
 **Plans**: 5 plans
 Plans:
-- [ ] 01-01-PLAN.md — Foundation: shared-types enum fix, deps, ROLE_THEME + formatIST, failing login e2e (walking-skeleton scaffold)
+- [x] 01-01-PLAN.md — Foundation: shared-types enum fix, deps, ROLE_THEME + formatIST, failing login e2e (walking-skeleton scaffold)
 - [ ] 01-02-PLAN.md — Login slice: hand-rolled primitives + zod/sonner login + Toaster
 - [ ] 01-03-PLAN.md — Shell slice: DashboardLayout, role layouts, logout, PortalShell removed
 - [ ] 01-04-PLAN.md — Async conventions (loading/error/empty) + remaining primitives

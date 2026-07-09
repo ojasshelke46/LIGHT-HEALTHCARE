@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-stopped_at: Phase 1 context gathered
-last_updated: "2026-07-09T06:18:24.006Z"
-last_activity: 2026-07-09 — Roadmap created, 33/33 requirements mapped across 5 phases
+status: executing
+stopped_at: Completed 01-01-PLAN.md
+last_updated: "2026-07-09T06:54:43.649Z"
+last_activity: 2026-07-09
 progress:
   total_phases: 5
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  total_plans: 5
+  completed_plans: 1
+  percent: 20
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** The live patient flow — book → check-in → consult → order tests → dispense → bill — works end-to-end in real time across every role portal without a page refresh.
-**Current focus:** Phase 1 — Staff Auth & Shared Shell
+**Current focus:** Phase 01 — staff-auth-shared-shell
 
 ## Current Position
 
-Phase: 1 of 5 (Staff Auth & Shared Shell)
-Plan: TBD (not yet planned)
-Status: Ready to plan
-Last activity: 2026-07-09 — Roadmap created, 33/33 requirements mapped across 5 phases
+Phase: 01 (staff-auth-shared-shell) — EXECUTING
+Plan: 2 of 5
+Status: Ready to execute
+Last activity: 2026-07-09
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██░░░░░░░░] 20%
 
 ## Performance Metrics
 
@@ -52,6 +52,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: -
 
 *Updated after each plan completion*
+| Phase 01 P01 | 12min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -64,6 +65,8 @@ Recent decisions affecting current work:
 - Init: Hand-rolled shadcn-style primitives in apps/web (no shadcn CLI run)
 - Init: `in_consultation` (DB enum) is canonical; shared-types `in_consult` fixed
 - Roadmap: Mobile (Phase 4) and AI services (Phase 5) run independent of the web staff-portal phases (2-3); both only depend on the already-validated Supabase foundation
+- [Phase 01]: 01-01: Committed pre-existing uncommitted monorepo scaffold as a baseline commit before task work, so plan diffs are reviewable
+- [Phase 01]: 01-01: Deferred marking AUTH-02/SHELL-01 complete in REQUIREMENTS.md -- plan is scaffold-only and its own e2e test proves them not-yet-satisfied; will mark complete when 01-03/01-05 make the e2e pass
 
 ### Pending Todos
 
@@ -83,6 +86,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-09T06:18:23.997Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-staff-auth-shared-shell/01-CONTEXT.md
+Last session: 2026-07-09T06:54:43.643Z
+Stopped at: Completed 01-01-PLAN.md
+Resume file: None
