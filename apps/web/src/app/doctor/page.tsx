@@ -1,11 +1,12 @@
-export default function DoctorPage() {
-  return (
-    <div>
-      <h1 className="text-xl font-semibold">Doctor</h1>
-      <p className="mt-2 text-slate-600">
-        Today&apos;s patients, consultation notes, orders, and prescriptions arrive
-        in Phase 2.
-      </p>
-    </div>
-  );
+import { getStaff } from "@/lib/staff";
+import { DoctorToday } from "./doctor-today";
+
+/**
+ * Doctor "today" landing (DOC-01). Server component — reads the signed-in
+ * doctor's own staff id via getStaff() (server-verified, never client
+ * input) and hands it to the live client list. doctors.id === staff.id.
+ */
+export default async function DoctorPage() {
+  const staff = await getStaff();
+  return <DoctorToday staffId={staff.id} />;
 }
