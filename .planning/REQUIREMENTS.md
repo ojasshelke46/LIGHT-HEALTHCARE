@@ -6,7 +6,7 @@ Source: HMS build brief (2026-07-09). Auto-scoped: every feature in the brief is
 
 ### Authentication & Access
 
-- [ ] **AUTH-01**: Staff can log in with email/password on a centered card UI; errors surface as toasts; no signup path
+- [x] **AUTH-01**: Staff can log in with email/password on a centered card UI; errors surface as toasts; no signup path
 - [ ] **AUTH-02**: Authenticated staff land on their role home (/reception, /doctor, /diagnostics, /pharmacy, /admin) and cannot open another role's portal
 - [ ] **AUTH-03**: Staff can log out from the header on any portal page
 - [ ] **AUTH-04**: Patients can sign in on mobile via phone OTP; a patient row is auto-created on first sign-in
