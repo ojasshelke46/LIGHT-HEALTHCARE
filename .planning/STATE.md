@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-08-PLAN.md (06/07 still pending)
-last_updated: "2026-07-09T19:49:03.685Z"
+stopped_at: Completed 02-06-PLAN.md (07 remains)
+last_updated: "2026-07-09T20:10:41.996Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 13
-  completed_plans: 11
-  percent: 85
+  completed_plans: 12
+  percent: 92
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 02 (reception-doctor-flow) — EXECUTING
-Plan: 6 of 8 (02-08 also complete, executed out of sequence — see Decisions; 06/07 remain)
+Plan: 7 of 8 (02-08 also complete, executed out of sequence — see Decisions; 06/07 remain)
 Status: Ready to execute
 Last activity: 2026-07-09
 
-Progress: [█████████░] 85%
+Progress: [█████████░] 92%
 
 ## Performance Metrics
 
@@ -63,6 +63,7 @@ Progress: [█████████░] 85%
 | Phase 02 P04 | 30min | 2 tasks | 4 files |
 | Phase 02 P05 | 15min | 1 tasks | 3 files |
 | Phase 02 P08 | 15min | 2 tasks | 3 files |
+| Phase 02 P06 | 20min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -99,6 +100,9 @@ Recent decisions affecting current work:
 - [Phase 02]: 02-08: Doctor all-patients search stays client-side only (no PostgREST filter) since the list is already server-scoped to the doctor's own visits via getStaff() -- removes any search-term injection surface (T-02-23)
 - [Phase 02]: 02-08: Live-verified both the all-patients list query and the nested cross-visit history query (visits->orders->prescriptions/medicines) against the real Supabase project via a doctor-role REST token -- confirmed Rohan Mehta's seeded visit (Viral fever, CBC lab order with result link, Paracetamol prescription) renders exactly as expected, no RLS denial
 - [Phase 02]: 02-08 was executed out of sequence (plans 06/07 -- consultation flow -- have no SUMMARY yet); 02-08 only depends on 02-01 (wave 2, independent of 06/07) so this is safe, but the STATE.md 'Plan: N of 8' counter reflects a simple increment, not true completion order -- 06 and 07 still need to be executed before the phase is fully done
+- [Phase 02]: 02-06: Split page.tsx and consult-client.tsx across two task commits per the plan, even though only HEAD (not each isolated commit) typechecks -- wrote both files' final content first, then staged/committed separately
+- [Phase 02]: 02-06: Found and fixed a live race condition (Start's optimistic status flip lets Complete fire before Start's own visit-insert resolves, racing two ensureVisit() calls into duplicate visits rows) via a visitCreationRef in-flight-insert-promise memo, confirmed by a scratch Playwright spec + direct REST query
+- [Phase 02]: 02-06: Logged reception-queue.spec.ts's 2 pre-existing failures (seed rows mutated non-idempotently by earlier runs) to deferred-items.md rather than fixing them -- out of this plan's file scope
 
 ### Pending Todos
 
@@ -118,6 +122,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-09T19:49:03.679Z
-Stopped at: Completed 02-08-PLAN.md (06/07 still pending)
+Last session: 2026-07-09T20:10:41.990Z
+Stopped at: Completed 02-06-PLAN.md (07 remains)
 Resume file: None
