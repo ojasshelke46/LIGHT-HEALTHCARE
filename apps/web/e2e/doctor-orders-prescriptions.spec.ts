@@ -1,4 +1,4 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Locator, type Page } from "@playwright/test";
 
 // Dev-only seed credentials — overridable via env, never production secrets.
 const EMAIL = process.env.E2E_DOCTOR_EMAIL ?? "doctor@test.com";
@@ -27,6 +27,27 @@ async function gotoConsult(page: Page) {
   await expect(page.getByText(/Diya Patel/i)).toBeVisible();
 }
 
+/**
+ * Remove is optimistic (UI updates before the DELETE request resolves), so
+ * asserting on the UI alone can race a subsequent test's page-close against
+ * an in-flight request and leave the row in the DB (seed-data drift). Wait
+ * for the actual REST DELETE response to settle before the test ends, so
+ * this-visit rows added here are reliably cleaned up (env hygiene note).
+ */
+async function removeAndAwaitPersisted(
+  page: Page,
+  table: "orders" | "prescriptions",
+  removeBtn: Locator,
+) {
+  const responsePromise = page.waitForResponse(
+    (resp) =>
+      resp.url().includes(`/rest/v1/${table}`) &&
+      resp.request().method() === "DELETE",
+  );
+  await removeBtn.click();
+  await responsePromise;
+}
+
 test("doctor adds and removes a test order", async ({ page }) => {
   await loginAsDoctor(page);
   await gotoConsult(page);
@@ -41,7 +62,11 @@ test("doctor adds and removes a test order", async ({ page }) => {
   await expect(newRow).toBeVisible();
   await expect(newRow).toContainText(/xray/i);
 
-  await newRow.getByTestId("remove-order-btn").click();
+  await removeAndAwaitPersisted(
+    page,
+    "orders",
+    newRow.getByTestId("remove-order-btn"),
+  );
   await expect(newRow).toHaveCount(0);
 });
 
@@ -69,7 +94,11 @@ test("doctor adds and removes a prescription via the medicine search", async ({
   await expect(newRow).toBeVisible();
   await expect(newRow).toContainText("6");
 
-  await newRow.getByTestId("remove-prescription-btn").click();
+  await removeAndAwaitPersisted(
+    page,
+    "prescriptions",
+    newRow.getByTestId("remove-prescription-btn"),
+  );
   await expect(newRow).toHaveCount(0);
 });
 
@@ -89,7 +118,7 @@ test("quantity must be a positive integer", async ({ page }) => {
   await page.getByTestId("prescription-quantity").fill("0");
   await page.getByTestId("add-prescription-btn").click();
 
-  await expect(page.getByText(/quantity/i)).toBeVisible();
+  await expect(page.getByRole("alert").filter({ hasText: /quantity/i })).toBeVisible();
   await expect(page.getByTestId("this-visit-prescription")).toHaveCount(
     preCount,
   );

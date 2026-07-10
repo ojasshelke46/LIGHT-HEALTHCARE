@@ -42,6 +42,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { OrdersSection } from "./orders-section";
+import { PrescriptionsSection } from "./prescriptions-section";
 import type { AppointmentStatus, Database } from "@light/shared-types";
 
 type OrderType = Database["public"]["Enums"]["order_type"];
@@ -125,11 +126,6 @@ export function ConsultClient({
   medicines,
   doctorId,
 }: ConsultClientProps) {
-  // `medicines` is loaded server-side here for Plan 07's prescription
-  // combobox — not yet rendered by this plan; referenced to avoid an
-  // unused-prop lint warning until Plan 07 wires it in.
-  void medicines;
-
   const router = useRouter();
   const [status, setStatus] = useState<AppointmentStatus>(initialStatus);
   const [visitId, setVisitId] = useState<string | null>(
@@ -403,7 +399,11 @@ export function ConsultClient({
           {status === "in_consultation" && visitId && patient ? (
             <div className="space-y-4">
               <OrdersSection visitId={visitId} patientId={patient.id} />
-              {/* prescriptions: Task 3 */}
+              <PrescriptionsSection
+                visitId={visitId}
+                patientId={patient.id}
+                medicines={medicines}
+              />
             </div>
           ) : null}
 
