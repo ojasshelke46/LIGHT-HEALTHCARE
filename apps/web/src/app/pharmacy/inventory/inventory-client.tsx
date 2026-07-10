@@ -23,6 +23,7 @@ import { EmptyState } from "@/components/empty-state";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Sheet } from "@/components/ui/sheet";
 import {
   Table,
   TableBody,
@@ -32,6 +33,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import { AddMedicineForm } from "./add-medicine-form";
 
 export type Medicine = {
   id: string;
@@ -50,6 +52,7 @@ export function InventoryClient() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editValue, setEditValue] = useState("");
   const [saving, setSaving] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   const fetcher = useCallback(async () => {
     const supabase = createClient();
@@ -121,12 +124,22 @@ export function InventoryClient() {
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-3">
         <h1 className="text-xl font-semibold text-slate-900">Inventory</h1>
-        <span
-          aria-live="polite"
-          className="text-xs font-medium text-slate-500"
-        >
-          {connected ? "● Live" : "Reconnecting…"}
-        </span>
+        <div className="flex items-center gap-3">
+          <span
+            aria-live="polite"
+            className="text-xs font-medium text-slate-500"
+          >
+            {connected ? "● Live" : "Reconnecting…"}
+          </span>
+          <Button
+            type="button"
+            size="sm"
+            data-testid="add-medicine-btn"
+            onClick={() => setSheetOpen(true)}
+          >
+            Add medicine
+          </Button>
+        </div>
       </div>
 
       {loading ? (
@@ -218,6 +231,20 @@ export function InventoryClient() {
           </TableBody>
         </Table>
       )}
+
+      <Sheet
+        open={sheetOpen}
+        onOpenChange={setSheetOpen}
+        side="right"
+        label="Add medicine"
+      >
+        <AddMedicineForm
+          onAdded={() => {
+            setSheetOpen(false);
+            refetch();
+          }}
+        />
+      </Sheet>
     </div>
   );
 }
