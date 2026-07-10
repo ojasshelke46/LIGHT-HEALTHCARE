@@ -71,9 +71,10 @@ with doc as (
 insert into public.appointments (id, doctor_id, patient_id, slot_time, status)
 select v.id, doc.id, v.patient_id, v.slot_time, v.status
 from doc, (values
-  -- check-in target
+  -- check-in target (23:55 so the slot stays in the FUTURE all working day —
+  -- the no-show spec asserts this row never shows a no-show button)
   ('c0000000-0000-0000-0000-000000000001'::uuid, 'a0000000-0000-0000-0000-000000000001'::uuid,
-   ((now() at time zone 'Asia/Kolkata')::date + time '10:00') at time zone 'Asia/Kolkata', 'booked'::appointment_status),
+   ((now() at time zone 'Asia/Kolkata')::date + time '23:55') at time zone 'Asia/Kolkata', 'booked'::appointment_status),
   -- past-slot no-show target (clamped inside today IST so the row still shows
   -- on the today-filtered queue even when seeded within 2h after midnight)
   ('c0000000-0000-0000-0000-000000000002'::uuid, 'a0000000-0000-0000-0000-000000000002'::uuid,
