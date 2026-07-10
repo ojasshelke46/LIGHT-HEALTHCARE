@@ -30,7 +30,7 @@ Source: HMS build brief (2026-07-09). Auto-scoped: every feature in the brief is
 - [x] **DOC-01**: Doctor sees their checked-in/in-consultation patients for today live (Realtime) with age, slot time, status, chief complaint
 - [x] **DOC-02**: Doctor can open a consultation view with patient header and history tabs (past visits, past orders with result links, past prescriptions)
 - [x] **DOC-03**: Doctor can start a consultation (checked_in → in_consultation), record complaint/diagnosis/notes, and complete the visit (saves visit, appointment → completed) with optimistic updates
-- [ ] **DOC-04**: Doctor can add test orders (lab/ct/mri/xray + instructions) and prescriptions (searchable medicine, dosage, duration, quantity), removable before save
+- [x] **DOC-04**: Doctor can add test orders (lab/ct/mri/xray + instructions) and prescriptions (searchable medicine, dosage, duration, quantity), removable before save
 - [x] **DOC-05**: Doctor can browse all patients they have seen and open full cross-visit history
 
 ### Diagnostics
