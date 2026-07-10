@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-07-10T11:28:54.366Z"
+stopped_at: Completed 03-02-PLAN.md
+last_updated: "2026-07-10T11:42:30.347Z"
 last_activity: 2026-07-10
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 18
-  completed_plans: 14
-  percent: 78
+  completed_plans: 15
+  percent: 83
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 03 (diagnostics-pharmacy-flow) — IN PROGRESS
-Plan: 1 of 5 (03-01 foundation complete: nav, getResultUrl/ResultLink, status/time helpers, doctor result-link refactor)
-Status: Ready to execute 03-02
+Plan: 2 of 5 (03-01 foundation complete: nav, getResultUrl/ResultLink, status/time helpers, doctor result-link refactor)
+Status: Ready to execute
 Last activity: 2026-07-10
 
-Progress: [████████░░] 78%
+Progress: [████████░░] 83%
 
 ## Performance Metrics
 
@@ -66,6 +66,7 @@ Progress: [████████░░] 78%
 | Phase 02 P06 | 20min | 3 tasks | 3 files |
 | Phase 02 P07 | 20min | 3 tasks | 4 files |
 | Phase 03 P01 | 10min | 3 tasks | 8 files |
+| Phase 03 P02 | 10min | 3 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -111,6 +112,9 @@ Recent decisions affecting current work:
 - [Phase 03]: 03-01: Rendered ResultLink as a bare <button> (not the shared Button primitive) to preserve the exact text-blue-600 hover:underline visual it replaces, matching plan spec literally
 - [Phase 03]: 03-01: Left doctor pages' pre-existing local OrderType/OrderStatus/PrescriptionStatus type aliases untouched -- only the result_url render sites changed; migrating to the new status.ts exports is out of this task's file scope
 - [Phase 03]: 03-01: Reverted requirements.mark-complete's premature check-off of DIAG-02/DIAG-03 -- this plan is foundation-only (nav/getResultUrl/ResultLink/helpers/doctor-refactor), no upload/complete flow or completed-orders browse page exists yet; deferred to 03-02/03-03 respectively, matching the Phase-1/Phase-2 precedent
+- [Phase 03]: 03-02: Added a dependency-free .env.local loader to playwright.config.ts (Rule 3) so specs using supabase-js directly from the Node test process see NEXT_PUBLIC_SUPABASE_URL/ANON_KEY
+- [Phase 03]: 03-02: Diagnostics rows hide optimistically before the async upload/update chain resolves (not after), so the row leaves the list independent of when the realtime refetch lands
+- [Phase 03]: 03-02: 20MB file-size guard runs at file-selection time (onChange), not at submit time, per the plan's 'if a file is chosen ... abort' wording
 
 ### Pending Todos
 
@@ -130,6 +134,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T11:27:46.671Z
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-07-10T11:42:30.341Z
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None
