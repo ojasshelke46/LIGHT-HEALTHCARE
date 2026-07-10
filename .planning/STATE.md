@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 2 verified passed (16/33 reqs done)
-last_updated: "2026-07-10T05:30:36.716Z"
+stopped_at: Completed 03-01-PLAN.md
+last_updated: "2026-07-10T11:28:54.366Z"
 last_activity: 2026-07-10
 progress:
   total_phases: 5
   completed_phases: 2
-  total_plans: 13
-  completed_plans: 13
-  percent: 100
+  total_plans: 18
+  completed_plans: 14
+  percent: 78
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** The live patient flow — book → check-in → consult → order tests → dispense → bill — works end-to-end in real time across every role portal without a page refresh.
-**Current focus:** Phase 02 — reception-doctor-flow
+**Current focus:** Phase 03 — diagnostics-pharmacy-flow
 
 ## Current Position
 
-Phase: 02 (reception-doctor-flow) — COMPLETE (all 8 plans executed; 02-08 ran out of sequence, see Decisions)
-Plan: 8 of 8
-Status: Ready to execute
+Phase: 03 (diagnostics-pharmacy-flow) — IN PROGRESS
+Plan: 1 of 5 (03-01 foundation complete: nav, getResultUrl/ResultLink, status/time helpers, doctor result-link refactor)
+Status: Ready to execute 03-02
 Last activity: 2026-07-10
 
-Progress: [██████████] 100%
+Progress: [████████░░] 78%
 
 ## Performance Metrics
 
@@ -65,6 +65,7 @@ Progress: [██████████] 100%
 | Phase 02 P08 | 15min | 2 tasks | 3 files |
 | Phase 02 P06 | 20min | 3 tasks | 3 files |
 | Phase 02 P07 | 20min | 3 tasks | 4 files |
+| Phase 03 P01 | 10min | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -107,6 +108,9 @@ Recent decisions affecting current work:
 - [Phase 02]: 02-07: Relaxed prescriptions zod schema's medicine_id from z.string().uuid() to z.string().min(1) -- seed medicine ids are not RFC4122-conformant, which zod's strict uuid() format rejected even for valid selections; id always comes from the trusted, already-fetched medicines array
 - [Phase 02]: 02-07: Hardened the e2e spec's remove assertions to wait for the actual DELETE REST response (not just optimistic UI) -- Playwright closing the page right after an instant UI-only assertion could cancel the in-flight background delete, leaving orphaned this-visit rows
 - [Phase 02]: 02-07: Phase 02 (reception-doctor-flow) fully executed -- all 8 plans (01-08) now have summaries
+- [Phase 03]: 03-01: Rendered ResultLink as a bare <button> (not the shared Button primitive) to preserve the exact text-blue-600 hover:underline visual it replaces, matching plan spec literally
+- [Phase 03]: 03-01: Left doctor pages' pre-existing local OrderType/OrderStatus/PrescriptionStatus type aliases untouched -- only the result_url render sites changed; migrating to the new status.ts exports is out of this task's file scope
+- [Phase 03]: 03-01: Reverted requirements.mark-complete's premature check-off of DIAG-02/DIAG-03 -- this plan is foundation-only (nav/getResultUrl/ResultLink/helpers/doctor-refactor), no upload/complete flow or completed-orders browse page exists yet; deferred to 03-02/03-03 respectively, matching the Phase-1/Phase-2 precedent
 
 ### Pending Todos
 
@@ -126,6 +130,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T05:30:36.709Z
-Stopped at: Phase 2 verified passed (16/33 reqs done)
-Resume file: .planning/ROADMAP.md
+Last session: 2026-07-10T11:27:46.671Z
+Stopped at: Completed 03-01-PLAN.md
+Resume file: None
