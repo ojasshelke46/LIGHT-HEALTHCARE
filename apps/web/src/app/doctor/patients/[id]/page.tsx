@@ -15,6 +15,7 @@ import { getStaff } from "@/lib/staff";
 import { formatIST } from "@/lib/format";
 import { ageFromDob } from "@/lib/patient";
 import { EmptyState } from "@/components/empty-state";
+import { ResultLink } from "@/components/result-link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Database } from "@light/shared-types";
@@ -238,16 +239,7 @@ export default async function DoctorPatientHistoryPage({
                                 {order.instructions}
                               </span>
                             ) : null}
-                            {order.result_url ? (
-                              <a
-                                href={order.result_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 hover:underline"
-                              >
-                                View result
-                              </a>
-                            ) : null}
+                            <ResultLink pathOrUrl={order.result_url} />
                           </li>
                         ))}
                       </ul>

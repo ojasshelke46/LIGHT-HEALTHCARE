@@ -15,6 +15,10 @@ import {
   Users,
   Receipt,
   CalendarClock,
+  Loader,
+  CheckCircle2,
+  Package,
+  ClipboardList,
 } from "lucide-react";
 import type { StaffRole } from "@light/shared-types";
 
@@ -59,7 +63,15 @@ export const ROLE_THEME: Record<StaffRole, RoleTheme> = {
     accentBar: "bg-amber-500",
     accentText: "text-amber-700",
     badge: "bg-amber-100 text-amber-800",
-    nav: [{ href: "/diagnostics", label: "Orders", icon: FlaskConical }],
+    nav: [
+      { href: "/diagnostics", label: "Pending", icon: FlaskConical },
+      { href: "/diagnostics/in-progress", label: "In Progress", icon: Loader },
+      {
+        href: "/diagnostics/completed",
+        label: "Completed",
+        icon: CheckCircle2,
+      },
+    ],
   },
   pharmacist: {
     label: "Pharmacy",
@@ -67,7 +79,15 @@ export const ROLE_THEME: Record<StaffRole, RoleTheme> = {
     accentBar: "bg-green-600",
     accentText: "text-green-700",
     badge: "bg-green-100 text-green-800",
-    nav: [{ href: "/pharmacy", label: "Prescriptions", icon: Pill }],
+    nav: [
+      { href: "/pharmacy", label: "Pending", icon: Pill },
+      { href: "/pharmacy/inventory", label: "Inventory", icon: Package },
+      {
+        href: "/pharmacy/dispensed",
+        label: "Dispensed",
+        icon: ClipboardList,
+      },
+    ],
   },
   admin: {
     label: "Admin",

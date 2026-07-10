@@ -29,6 +29,7 @@ import { formatIST } from "@/lib/format";
 import { ageFromDob } from "@/lib/patient";
 import { APPOINTMENT_STATUS_BADGE } from "@/lib/status";
 import { EmptyState } from "@/components/empty-state";
+import { ResultLink } from "@/components/result-link";
 import {
   Card,
   CardContent,
@@ -320,16 +321,7 @@ export function ConsultClient({
                   {o.instructions ? (
                     <span className="text-slate-600">{o.instructions}</span>
                   ) : null}
-                  {o.result_url ? (
-                    <a
-                      href={o.result_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
-                    >
-                      View result
-                    </a>
-                  ) : null}
+                  <ResultLink pathOrUrl={o.result_url} />
                 </li>
               ))}
             </ul>
