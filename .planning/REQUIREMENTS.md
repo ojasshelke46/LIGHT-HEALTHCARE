@@ -18,9 +18,9 @@ Source: HMS build brief (2026-07-09). Auto-scoped: every feature in the brief is
 
 ### Reception
 
-- [ ] **RECEP-01**: Reception sees today's appointment queue live (Realtime) ordered by slot time, with patient name, doctor, IST slot time, color-coded status badge
-- [ ] **RECEP-02**: Reception can check in a booked appointment and mark past-slot booked rows no-show
-- [ ] **RECEP-03**: Reception can filter the queue by status tabs and search by patient name/phone; stats cards show today totals (total, checked-in, waiting, completed)
+- [x] **RECEP-01**: Reception sees today's appointment queue live (Realtime) ordered by slot time, with patient name, doctor, IST slot time, color-coded status badge
+- [x] **RECEP-02**: Reception can check in a booked appointment and mark past-slot booked rows no-show
+- [x] **RECEP-03**: Reception can filter the queue by status tabs and search by patient name/phone; stats cards show today totals (total, checked-in, waiting, completed)
 - [x] **RECEP-04**: Reception can search patients by name/phone/ABHA and open a patient's info + appointment/visit history
 - [x] **RECEP-05**: Reception can register a new patient (name, dob, phone, email, address, ABHA) with zod validation
 - [x] **RECEP-06**: Reception sees today's completed visits needing billing and can record a payment (amount, method) with pending/paid badges
