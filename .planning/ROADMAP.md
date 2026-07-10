@@ -74,7 +74,13 @@ Plans:
   3. Pharmacist sees pending prescriptions live with current stock and low-stock warnings
   4. Pharmacist dispenses medicine via the atomic dispense_medicine RPC; insufficient stock surfaces as an error toast rather than a partial dispense
   5. Pharmacist can manage inventory (inline stock edit, low-stock items surfaced first, add-medicine form) and browse dispensed history with a date-range filter
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [ ] 03-01-PLAN.md — Foundation: portal nav (D-32/D-37), getResultUrl + ResultLink (D-35), status/type-icon/stock + IST date-range helpers, doctor result-link refactor
+- [ ] 03-02-PLAN.md — Diagnostics fulfillment: live ordered list + accept (DIAG-01), in-progress upload + notes + complete (DIAG-02), flow e2e
+- [ ] 03-03-PLAN.md — Diagnostics completed browse: server date/type filters + signed-URL View (DIAG-03), e2e extended through Completed
+- [ ] 03-04-PLAN.md — Pharmacy dispense: live pending + stock/low-stock warnings (PHARM-01), atomic dispense RPC + insufficient-stock toast (PHARM-02), self-resetting e2e
+- [ ] 03-05-PLAN.md — Pharmacy inventory (inline stock edit + add-medicine, PHARM-03) + dispensed history date filter (PHARM-04)
 **UI hint**: yes
 
 ### Phase 4: Mobile Patient App
@@ -112,6 +118,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Staff Auth & Shared Shell | 0/5 | Not started | - |
 | 2. Reception & Doctor Flow | 0/8 | Planned | - |
-| 3. Diagnostics & Pharmacy Flow | 0/TBD | Not started | - |
+| 3. Diagnostics & Pharmacy Flow | 0/5 | Planned | - |
 | 4. Mobile Patient App | 0/TBD | Not started | - |
 | 5. AI Services | 0/TBD | Not started | - |
+</content>
