@@ -132,6 +132,19 @@ test.describe("diagnostics accept -> upload -> complete (DIAG-01/02)", () => {
     expect(order?.completed_at).not.toBeNull();
     // A Storage PATH, never a public/http URL (D-34/T-03-06).
     expect(order?.result_url).toMatch(/^orders\//);
+
+    // DIAG-03/D-36: completed page shows the row and its ResultLink opens a
+    // signed URL to the private scan-results bucket.
+    await page.goto("/diagnostics/completed");
+    const completedRow = page.getByTestId(`completed-row-${ORDER_ID}`);
+    await expect(completedRow).toBeVisible();
+
+    const popupPromise = page.waitForEvent("popup");
+    await completedRow.getByTestId("view-result").click();
+    const popup = await popupPromise;
+    expect(popup.url()).toContain("scan-results");
+    await popup.close();
+
     await supabase.auth.signOut();
   });
 });
