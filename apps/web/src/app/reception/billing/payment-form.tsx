@@ -21,7 +21,13 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectItem } from "@/components/ui/select";
 
 const schema = z.object({
-  amount: z.coerce.number().positive("Enter a positive amount"),
+  amount: z.coerce
+    .number()
+    .positive("Enter a positive amount")
+    .max(1_000_000, "Amount too large")
+    .refine((n) => Number.isInteger(Math.round(n * 100)) && Math.round(n * 100) === n * 100, {
+      message: "Max two decimal places",
+    }),
   method: z.enum(["cash", "card", "upi"]),
 });
 
@@ -53,6 +59,23 @@ export function PaymentForm({
 
     setLoading(true);
     const supabase = createClient();
+
+    // Duplicate guard: two counters (or a double-submit) must not bill the
+    // same visit twice. Best-effort check-before-insert — the button is also
+    // disabled while the insert is in flight.
+    const existing = await supabase
+      .from("payments")
+      .select("id")
+      .eq("visit_id", visitId)
+      .eq("status", "paid")
+      .limit(1);
+    if (!existing.error && (existing.data ?? []).length > 0) {
+      setLoading(false);
+      toast.error("This visit already has a recorded payment");
+      onRecorded();
+      return;
+    }
+
     const { error } = await supabase.from("payments").insert({
       visit_id: visitId,
       patient_id: patientId,

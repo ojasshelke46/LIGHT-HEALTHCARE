@@ -27,10 +27,22 @@ export function QueueRow({
   row: QueueAppointment;
   onChanged: () => void;
 }) {
-  const [optimisticStatus, setOptimisticStatus] = useState<AppointmentStatus>(
-    row.status ?? "booked",
-  );
+  // Local override only holds the optimistic value between click and the
+  // realtime refetch; once the server row changes (row.status), it wins —
+  // otherwise badges freeze on external changes from other tabs/roles.
+  const [override, setOverride] = useState<{
+    from: AppointmentStatus | null;
+    to: AppointmentStatus;
+  } | null>(null);
   const [pending, setPending] = useState(false);
+
+  const optimisticStatus: AppointmentStatus =
+    override && override.from === row.status
+      ? override.to
+      : (row.status ?? "booked");
+  const setOptimisticStatus = (to: AppointmentStatus) =>
+    setOverride({ from: row.status, to });
+  const rollbackStatus = () => setOverride(null);
 
   const badge = APPOINTMENT_STATUS_BADGE[optimisticStatus];
   const isPastSlot = new Date(row.slot_time).getTime() < Date.now();
@@ -48,7 +60,7 @@ export function QueueRow({
     setPending(false);
 
     if (error) {
-      setOptimisticStatus(row.status ?? "booked");
+      rollbackStatus();
       toast.error("Could not check in — try again");
       return;
     }
@@ -67,7 +79,7 @@ export function QueueRow({
     setPending(false);
 
     if (error) {
-      setOptimisticStatus(row.status ?? "booked");
+      rollbackStatus();
       toast.error("Could not mark no-show — try again");
       return;
     }

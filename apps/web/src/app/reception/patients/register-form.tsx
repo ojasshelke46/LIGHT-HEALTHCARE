@@ -21,7 +21,13 @@ import { Label } from "@/components/ui/label";
 const schema = z.object({
   name: z.string().min(1, "Name is required"),
   phone: z.string().regex(/^[0-9]{10}$/, "Enter a 10-digit phone number"),
-  dob: z.string().optional().or(z.literal("")),
+  dob: z
+    .string()
+    .optional()
+    .or(z.literal(""))
+    .refine((v) => !v || new Date(v).getTime() <= Date.now(), {
+      message: "Date of birth cannot be in the future",
+    }),
   email: z.string().email("Invalid email").optional().or(z.literal("")),
   address: z.string().optional(),
   abha_id: z.string().optional(),

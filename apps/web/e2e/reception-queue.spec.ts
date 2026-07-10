@@ -39,9 +39,17 @@ test("reception sees the live queue and can check a booked patient in", async ({
 
   const stat = page.getByTestId("stat-checked-in");
   await expect(stat).toBeVisible();
-  const statText = (await stat.textContent()) ?? "";
-  const statValue = Number.parseInt(statText.replace(/\D/g, ""), 10);
-  expect(statValue).toBeGreaterThanOrEqual(1);
+  // The stat card reflects the SERVER count, which arrives via the debounced
+  // realtime refetch — poll instead of reading once (race otherwise).
+  await expect
+    .poll(
+      async () => {
+        const statText = (await stat.textContent()) ?? "";
+        return Number.parseInt(statText.replace(/\D/g, ""), 10);
+      },
+      { timeout: 10_000 },
+    )
+    .toBeGreaterThanOrEqual(1);
 });
 
 test("no-show button only appears on past-slot booked rows", async ({

@@ -11,6 +11,7 @@
 
 import { ClipboardList, UserRound } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
+import { getStaff } from "@/lib/staff";
 import { formatIST } from "@/lib/format";
 import { ageFromDob } from "@/lib/patient";
 import { EmptyState } from "@/components/empty-state";
@@ -65,6 +66,35 @@ export default async function DoctorPatientHistoryPage({
 }) {
   const { id } = await params;
   const supabase = await createClient();
+  const staff = await getStaff();
+
+  // IDOR guard (T-02-23): a doctor may only open patients they have actually
+  // treated — require at least one of THIS doctor's visits for the patient
+  // before any PII is fetched.
+  const ownershipResult = await supabase
+    .from("visits")
+    .select("id")
+    .eq("patient_id", id)
+    .eq("doctor_id", staff.id)
+    .limit(1);
+
+  if (ownershipResult.error) {
+    return (
+      <div className="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+        <p role="alert">{ownershipResult.error.message}</p>
+      </div>
+    );
+  }
+
+  if ((ownershipResult.data ?? []).length === 0) {
+    return (
+      <EmptyState
+        icon={UserRound}
+        title="Patient not found"
+        description="This patient record doesn't exist or was removed."
+      />
+    );
+  }
 
   const patientResult = await supabase
     .from("patients")
@@ -98,6 +128,7 @@ export default async function DoctorPatientHistoryPage({
       "id, chief_complaint, diagnosis, notes, completed_at, created_at, orders(id, type, status, instructions, result_url), prescriptions(id, dosage, duration, quantity, status, medicines(name))",
     )
     .eq("patient_id", id)
+    .eq("doctor_id", staff.id)
     .order("created_at", { ascending: false })
     .limit(50);
 
