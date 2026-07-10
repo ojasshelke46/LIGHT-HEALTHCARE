@@ -6,6 +6,8 @@
  */
 
 import type { AppointmentStatus, Database } from "@light/shared-types";
+import type { LucideIcon } from "lucide-react";
+import { FlaskConical, ScanLine, Magnet, Image as ImageIcon } from "lucide-react";
 
 export const APPOINTMENT_STATUS_BADGE: Record<
   AppointmentStatus,
@@ -40,3 +42,70 @@ export const PAYMENT_STATUS_BADGE: Record<
     className: "border border-slate-300 text-slate-500",
   },
 };
+
+/** Diagnostics order status -> badge label + color map (D-33). */
+export type OrderStatus = Database["public"]["Enums"]["order_status"];
+
+export const ORDER_STATUS_BADGE: Record<
+  OrderStatus,
+  { label: string; className: string }
+> = {
+  ordered: { label: "Ordered", className: "bg-slate-100 text-slate-700" },
+  in_progress: {
+    label: "In Progress",
+    className: "bg-amber-100 text-amber-800",
+  },
+  completed: { label: "Completed", className: "bg-green-100 text-green-800" },
+};
+
+/** Pharmacy prescription status -> badge label + color map (D-38). */
+export type PrescriptionStatus =
+  Database["public"]["Enums"]["prescription_status"];
+
+export const PRESCRIPTION_STATUS_BADGE: Record<
+  PrescriptionStatus,
+  { label: string; className: string }
+> = {
+  pending: { label: "Pending", className: "bg-yellow-100 text-yellow-800" },
+  dispensed: {
+    label: "Dispensed",
+    className: "bg-green-100 text-green-800",
+  },
+};
+
+/** Diagnostics order type -> icon map (D-33). */
+export type OrderType = Database["public"]["Enums"]["order_type"];
+
+export const ORDER_TYPE_ICON: Record<OrderType, LucideIcon> = {
+  lab: FlaskConical,
+  ct: ScanLine,
+  mri: Magnet,
+  xray: ImageIcon,
+};
+
+/** Pharmacy stock indicator (D-38): insufficient / low / ok. */
+export function stockLevel(
+  stock: number,
+  quantity: number,
+  threshold: number,
+): { level: "insufficient" | "low" | "ok"; label: string; className: string } {
+  if (stock < quantity) {
+    return {
+      level: "insufficient",
+      label: `Insufficient stock (have ${stock})`,
+      className: "bg-red-100 text-red-800",
+    };
+  }
+  if (stock <= threshold) {
+    return {
+      level: "low",
+      label: "Low stock",
+      className: "bg-amber-100 text-amber-800",
+    };
+  }
+  return {
+    level: "ok",
+    label: `In stock (${stock})`,
+    className: "bg-green-100 text-green-800",
+  };
+}
