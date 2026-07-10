@@ -41,6 +41,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { OrdersSection } from "./orders-section";
 import type { AppointmentStatus, Database } from "@light/shared-types";
 
 type OrderType = Database["public"]["Enums"]["order_type"];
@@ -399,8 +400,11 @@ export function ConsultClient({
             />
           </div>
 
-          {status === "in_consultation" ? (
-            <div className="space-y-4">{/* orders + prescriptions: Plan 07 */}</div>
+          {status === "in_consultation" && visitId && patient ? (
+            <div className="space-y-4">
+              <OrdersSection visitId={visitId} patientId={patient.id} />
+              {/* prescriptions: Task 3 */}
+            </div>
           ) : null}
 
           <div className="flex justify-end gap-3">
