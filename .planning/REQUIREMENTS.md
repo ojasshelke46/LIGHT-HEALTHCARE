@@ -43,8 +43,8 @@ Source: HMS build brief (2026-07-09). Auto-scoped: every feature in the brief is
 
 - [x] **PHARM-01**: Pharmacist sees pending prescriptions live (Realtime) with patient, medicine, dosage, duration, quantity, doctor, and current stock with low-stock warning
 - [x] **PHARM-02**: Pharmacist dispenses via the atomic dispense_medicine RPC (stock decrement + status flip in one transaction; insufficient stock surfaces as error toast)
-- [ ] **PHARM-03**: Pharmacist can manage inventory: full list with stock/unit/price/threshold, inline stock edit, low-stock items surfaced first, add-medicine form
-- [ ] **PHARM-04**: Pharmacist can browse dispensed history with date-range filter
+- [x] **PHARM-03**: Pharmacist can manage inventory: full list with stock/unit/price/threshold, inline stock edit, low-stock items surfaced first, add-medicine form
+- [x] **PHARM-04**: Pharmacist can browse dispensed history with date-range filter
 
 ### Mobile (Patient App)
 

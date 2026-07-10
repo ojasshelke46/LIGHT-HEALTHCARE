@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-02-PLAN.md
-last_updated: "2026-07-10T11:54:23.812Z"
+stopped_at: Completed 03-05-PLAN.md
+last_updated: "2026-07-10T17:49:57.768Z"
 last_activity: 2026-07-10
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 18
-  completed_plans: 16
-  percent: 89
+  completed_plans: 17
+  percent: 94
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 03 (diagnostics-pharmacy-flow) — IN PROGRESS
-Plan: 3 of 5 (03-01 foundation complete: nav, getResultUrl/ResultLink, status/time helpers, doctor result-link refactor)
+Plan: 4 of 5 (03-01 foundation complete: nav, getResultUrl/ResultLink, status/time helpers, doctor result-link refactor)
 Status: Ready to execute
 Last activity: 2026-07-10
 
-Progress: [█████████░] 89%
+Progress: [█████████░] 94%
 
 ## Performance Metrics
 
@@ -68,6 +68,7 @@ Progress: [█████████░] 89%
 | Phase 03 P01 | 10min | 3 tasks | 8 files |
 | Phase 03 P02 | 10min | 3 tasks | 9 files |
 | Phase 03 P04 | 12min | 2 tasks | 4 files |
+| Phase 03 P05 | 25min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -118,6 +119,9 @@ Recent decisions affecting current work:
 - [Phase 03]: 03-02: 20MB file-size guard runs at file-selection time (onChange), not at submit time, per the plan's 'if a file is chosen ... abort' wording
 - [Phase 03]: 03-04: Dispense button's native disabled reflects only the in-flight request, not insufficient-stock -- a hard-disabled button never dispatches a click event in real browsers, which would make the RPC's atomic guard unreachable; insufficient stock is shown via badge + muted styling only, matching threat model T-03-11 ('button disable is UX-only, server is authoritative')
 - [Phase 03]: 03-04 was executed out of sequence relative to 03-03 (diagnostics completed) -- 03-04 only depends on 03-01 per its frontmatter depends_on, so this is safe; 03-03 still needs to run before Phase 3 is fully done, matching the 02-08 precedent
+- [Phase 03]: 03-05: e2e includes an extra add-medicine Sheet round-trip test (Date.now()-unique name, deleted in finally) beyond the plan's required inline-edit test -- add-medicine is a must_have truth and environment notes mandated unique names + deletion for spec-added medicines
+- [Phase 03]: 03-05: inline stock edit silently ignores invalid input (non-integer/negative) per plan wording, reverting the cell to display mode with no write -- the inventory cell is a fast counter-side control, not a form
+- [Phase 03]: 03-05: executed before 03-03 (wave 2, depends only on 03-01) matching the 02-08/03-04 out-of-sequence precedent -- 03-03 is the only Phase-3 plan remaining
 
 ### Pending Todos
 
@@ -137,6 +141,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T11:52:51.680Z
-Stopped at: Completed 03-02-PLAN.md
+Last session: 2026-07-10T17:49:57.762Z
+Stopped at: Completed 03-05-PLAN.md
 Resume file: None
