@@ -94,7 +94,12 @@ Plans:
   3. Patient can book an appointment (department -> doctor -> free slot -> confirm) and receive a QR code of the appointment id
   4. Patient sees their appointments (upcoming first) with status badges and per-appointment QR, and views visit reports grouped by date (diagnosis, test results with file viewer, prescriptions)
   5. Patient can view and edit profile details, including ABHA ID
-**Plans**: TBD
+**Plans**: 4 plans
+Plans:
+- [ ] 04-01-PLAN.md — Scaffold (Expo SDK 52 + expo-router + NativeWind, pnpm monorepo) + session gate + phone-OTP/__DEV__ auth + patient-row provisioning (AUTH-04)
+- [ ] 04-02-PLAN.md — Home (next-appointment card + quick actions) + Booking wizard (dept -> doctor -> slot -> atomic book_appointment RPC -> QR) (MOB-01, MOB-02)
+- [ ] 04-03-PLAN.md — Appointments (upcoming-first + per-appointment QR modal) + Reports (visits grouped by date, signed-URL file viewer, prescriptions) (MOB-03, MOB-04)
+- [ ] 04-04-PLAN.md — Profile view/edit (name/email/address/ABHA, phone read-only) via self-scoped patients update (MOB-05)
 **UI hint**: yes
 
 ### Phase 5: AI Services
@@ -119,6 +124,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Staff Auth & Shared Shell | 0/5 | Not started | - |
 | 2. Reception & Doctor Flow | 0/8 | Planned | - |
 | 3. Diagnostics & Pharmacy Flow | 0/5 | Planned | - |
-| 4. Mobile Patient App | 0/TBD | Not started | - |
+| 4. Mobile Patient App | 0/4 | Planned | - |
 | 5. AI Services | 0/TBD | Not started | - |
 </content>
