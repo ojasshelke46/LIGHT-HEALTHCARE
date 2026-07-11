@@ -2,11 +2,19 @@
 
 ## What This Is
 
-An AI-native hospital management system for a small Indian hospital. Staff (reception, doctors, diagnostics, pharmacy, admin) work in role-scoped Next.js web portals; patients book appointments and view reports from an Expo mobile app; a FastAPI service hosts AI endpoints (triage, drug-interaction, ambient scribe). Everything runs on one Supabase project (Postgres + Auth + Realtime + Storage).
+An AI-native hospital management system built for both super specialty hospitals and small hospitals/clinics in India. Staff (reception, doctors, diagnostics, pharmacy, admin) work in role-scoped Next.js web portals; patients book appointments and view reports from an Expo mobile app; a FastAPI service hosts AI endpoints (triage, drug-interaction, ambient scribe). Everything runs on one Supabase project (Postgres + Auth + Realtime + Storage).
 
 ## Core Value
 
-The live patient flow — book → check-in → consult → order tests → dispense → bill — works end-to-end in real time across every role portal without a page refresh.
+The live patient flow — book → check-in → consult → order tests → dispense → bill — works end-to-end in real time across every role portal without a page refresh, at both a 10-bed clinic and a 500-bed multi-department super specialty hospital.
+
+## Scale Targets (design for now, not retrofit later)
+
+- **Departments:** UI (department pickers, doctor lists) must handle 15-20+ departments cleanly — cardiology, neurology, oncology, ortho, etc. — never assume 2-3.
+- **Doctors:** multiple doctors per department, each with an independent slot calendar. No one-doctor-per-department assumption anywhere.
+- **Queue/volume:** reception queue and doctor dashboards must stay usable at hundreds of appointments/day; add pagination or virtualization as volume grows rather than hardcoding small-list assumptions.
+- **Roles:** current 5 roles (reception/doctor/lab_tech/pharmacist/admin) are the v1 floor, not the ceiling — ward nurse, OT staff, separate billing desk come later. Keep the staff_role enum + role-scoped RLS pattern easy to extend.
+- **Multi-location (known gap):** not required now and not solved — there is no hospital_id anywhere. Avoid new single-hospital hardcoding that would make multi-location impossible later.
 
 ## Requirements
 
@@ -64,6 +72,7 @@ The live patient flow — book → check-in → consult → order tests → disp
 - **Validation/UX**: zod on all forms; loading/error/empty states everywhere; sonner toasts; skeletons per page
 - **Accessibility**: aria labels + keyboard navigation on interactive elements
 - **Auth split**: staff = email/password, patients = phone OTP — different portals, same Supabase Auth
+- **Dual-scale target**: every feature must work at both small-clinic and super specialty scale (many departments, many doctors per department, high daily volume) — see Scale Targets
 
 ## Key Decisions
 
