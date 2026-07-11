@@ -37,7 +37,7 @@ Source: HMS build brief (2026-07-09). Auto-scoped: every feature in the brief is
 
 - [x] **DIAG-01**: Lab tech sees ordered tests live (Realtime) with patient, type icon, doctor, instructions, and can accept them (→ in_progress)
 - [x] **DIAG-02**: Lab tech can upload a result file to the scan-results Storage bucket, add result notes, and mark the order completed (sets completed_at)
-- [ ] **DIAG-03**: Lab tech can browse completed orders with date-range and type filters and open result files
+- [x] **DIAG-03**: Lab tech can browse completed orders with date-range and type filters and open result files
 
 ### Pharmacy
 

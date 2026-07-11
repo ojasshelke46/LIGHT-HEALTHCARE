@@ -78,7 +78,7 @@ Plans:
 Plans:
 - [x] 03-01-PLAN.md — Foundation: portal nav (D-32/D-37), getResultUrl + ResultLink (D-35), status/type-icon/stock + IST date-range helpers, doctor result-link refactor
 - [x] 03-02-PLAN.md — Diagnostics fulfillment: live ordered list + accept (DIAG-01), in-progress upload + notes + complete (DIAG-02), flow e2e
-- [ ] 03-03-PLAN.md — Diagnostics completed browse: server date/type filters + signed-URL View (DIAG-03), e2e extended through Completed
+- [x] 03-03-PLAN.md — Diagnostics completed browse: server date/type filters + signed-URL View (DIAG-03), e2e extended through Completed
 - [x] 03-04-PLAN.md — Pharmacy dispense: live pending + stock/low-stock warnings (PHARM-01), atomic dispense RPC + insufficient-stock toast (PHARM-02), self-resetting e2e
 - [x] 03-05-PLAN.md — Pharmacy inventory (inline stock edit + add-medicine, PHARM-03) + dispensed history date filter (PHARM-04)
 **UI hint**: yes
