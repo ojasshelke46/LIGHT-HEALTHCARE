@@ -13,12 +13,13 @@
  */
 
 import { useCallback, useEffect, useState } from "react";
-import { FlatList, Pressable, Text, View } from "react-native";
+import { Alert, FlatList, Pressable, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { supabase } from "@/lib/supabase";
 import { filterFreeFutureSlots, type BookingStage } from "@/lib/booking";
 import { formatIST } from "@/lib/format";
-import { EmptyState, ErrorState, Skeleton } from "@/components/ui";
+import { Button, EmptyState, ErrorState, Skeleton } from "@/components/ui";
+import { QRView } from "@/components/QRView";
 
 type Dept = { id: string; name: string };
 type Doctor = {
@@ -49,6 +50,9 @@ export function BookingWizard() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const [booking, setBooking] = useState(false);
+  const [appointmentId, setAppointmentId] = useState<string | null>(null);
 
   const fetchDepts = useCallback(async () => {
     setLoading(true);
@@ -143,6 +147,55 @@ export function BookingWizard() {
     } else if (stage === "slot" && selectedDoctor) {
       void fetchSlots(selectedDoctor.id);
     }
+  };
+
+  /**
+   * Confirm the booking through the atomic book_appointment RPC (T-04-05).
+   * The RPC row-locks the slot server-side and rejects an already-taken
+   * slot; the client NEVER sets is_booked or inserts an appointment row —
+   * the RPC is the sole authority.
+   */
+  const confirmBooking = async () => {
+    if (!selectedSlot || booking) return;
+    setBooking(true);
+    const { data, error: rpcError } = await supabase.rpc("book_appointment", {
+      p_slot_id: selectedSlot.id,
+    });
+    setBooking(false);
+
+    if (rpcError) {
+      if (rpcError.message.toLowerCase().includes("already booked")) {
+        // Race: another patient took the slot between render and confirm —
+        // surface it and send the user back to a refreshed slot list.
+        Alert.alert(
+          "Slot already booked",
+          "That slot was just taken — pick another.",
+        );
+        setSelectedSlot(null);
+        setStage("slot");
+        if (selectedDoctor) void fetchSlots(selectedDoctor.id);
+      } else {
+        Alert.alert(
+          "Booking failed",
+          "Something went wrong while booking. Please try again.",
+        );
+      }
+      return;
+    }
+
+    setAppointmentId(data);
+    setStage("success");
+  };
+
+  /** Reset the wizard to a fresh dept stage after a successful booking. */
+  const resetWizard = () => {
+    setSelectedDept(null);
+    setSelectedDoctor(null);
+    setSelectedSlot(null);
+    setAppointmentId(null);
+    setError(null);
+    setStage("dept");
+    void fetchDepts();
   };
 
   // Belt-and-suspenders re-filter at render time (T-04-05: the server query
@@ -278,32 +331,65 @@ export function BookingWizard() {
           />
         )
       ) : stage === "confirm" ? (
-        <View className="rounded-xl border border-slate-200 bg-white p-4">
-          <Text className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-            Appointment summary
-          </Text>
-          <View className="mt-3 gap-2">
-            <View className="flex-row justify-between">
-              <Text className="text-sm text-slate-500">Department</Text>
-              <Text className="text-sm font-medium text-slate-900">
-                {selectedDept?.name ?? "—"}
-              </Text>
+        <View>
+          <View className="rounded-xl border border-slate-200 bg-white p-4">
+            <Text className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+              Appointment summary
+            </Text>
+            <View className="mt-3 gap-2">
+              <View className="flex-row justify-between">
+                <Text className="text-sm text-slate-500">Department</Text>
+                <Text className="text-sm font-medium text-slate-900">
+                  {selectedDept?.name ?? "—"}
+                </Text>
+              </View>
+              <View className="flex-row justify-between">
+                <Text className="text-sm text-slate-500">Doctor</Text>
+                <Text className="text-sm font-medium text-slate-900">
+                  {doctorName}
+                  {selectedDoctor?.specialization
+                    ? ` (${selectedDoctor.specialization})`
+                    : ""}
+                </Text>
+              </View>
+              <View className="flex-row justify-between">
+                <Text className="text-sm text-slate-500">Time</Text>
+                <Text className="text-sm font-medium text-slate-900">
+                  {selectedSlot
+                    ? formatIST(selectedSlot.slot_time, "datetime")
+                    : "—"}
+                </Text>
+              </View>
             </View>
-            <View className="flex-row justify-between">
-              <Text className="text-sm text-slate-500">Doctor</Text>
-              <Text className="text-sm font-medium text-slate-900">
-                {doctorName}
-                {selectedDoctor?.specialization
-                  ? ` (${selectedDoctor.specialization})`
-                  : ""}
-              </Text>
-            </View>
-            <View className="flex-row justify-between">
-              <Text className="text-sm text-slate-500">Time</Text>
-              <Text className="text-sm font-medium text-slate-900">
-                {selectedSlot ? formatIST(selectedSlot.slot_time, "datetime") : "—"}
-              </Text>
-            </View>
+          </View>
+          <View className="mt-4">
+            <Button
+              title="Confirm booking"
+              loading={booking}
+              onPress={() => void confirmBooking()}
+            />
+          </View>
+        </View>
+      ) : stage === "success" && appointmentId ? (
+        <View className="items-center">
+          <View className="w-full items-center rounded-xl border border-teal-200 bg-teal-50 p-4">
+            <Ionicons name="checkmark-circle" size={40} color="#0d9488" />
+            <Text className="mt-2 text-base font-semibold text-teal-900">
+              Appointment booked
+            </Text>
+            <Text className="mt-1 text-center text-sm text-teal-800">
+              {doctorName}
+              {selectedSlot
+                ? ` · ${formatIST(selectedSlot.slot_time, "datetime")}`
+                : ""}
+            </Text>
+            <QRView value={appointmentId} />
+            <Text className="text-center text-xs text-slate-500">
+              Show this QR code at the reception desk to check in.
+            </Text>
+          </View>
+          <View className="mt-4 w-full">
+            <Button title="Done" variant="secondary" onPress={resetWizard} />
           </View>
         </View>
       ) : null}

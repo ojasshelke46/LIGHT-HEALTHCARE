@@ -1,12 +1,15 @@
-import { Screen, EmptyState } from "@/components/ui";
+/**
+ * Book tab (MOB-02, D-51): hosts the staged booking wizard.
+ * All flow state lives inside BookingWizard — this route is just the shell.
+ */
+
+import { Screen } from "@/components/ui";
+import { BookingWizard } from "@/components/BookingWizard";
 
 export default function BookScreen() {
   return (
     <Screen>
-      <EmptyState
-        title="Book an appointment"
-        hint="Choose a department, doctor, and slot here."
-      />
+      <BookingWizard />
     </Screen>
   );
 }
