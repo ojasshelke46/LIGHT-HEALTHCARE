@@ -104,6 +104,7 @@ export function Button({
 
 export function Field({
   label,
+  className,
   ...inputProps
 }: { label: string } & TextInputProps) {
   return (
@@ -119,7 +120,7 @@ export function Field({
         accessibilityLabel={label}
         accessibilityLabelledBy={`${label}-label`}
         placeholderTextColor="#94a3b8"
-        className="rounded-lg border border-slate-300 px-3 py-2.5 text-base text-slate-900"
+        className={`rounded-lg border border-slate-300 px-3 py-2.5 text-base text-slate-900 ${className ?? ""}`}
         {...inputProps}
       />
     </View>

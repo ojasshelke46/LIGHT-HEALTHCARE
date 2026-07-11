@@ -14,6 +14,16 @@ config.resolver.nodeModulesPaths = [
   path.resolve(projectRoot, "node_modules"),
   path.resolve(workspaceRoot, "node_modules"),
 ];
-config.resolver.disableHierarchicalLookup = true;
+// NOTE (Rule 1 fix, 04-01 Task 3): disableHierarchicalLookup was originally
+// `true` per the D-46 recipe (correct for a hoisted npm/yarn-workspace
+// node_modules layout). This repo's pnpm store uses pnpm's default isolated
+// layout, where a package's *own* transitive deps (e.g. expo-router's
+// @expo/metro-runtime, nativewind's react-native-css-interop/jsx-runtime,
+// @babel/runtime) only resolve by walking up from the requiring file via
+// standard hierarchical lookup — disabling it broke `expo export` (verified:
+// module-not-found errors for exactly those three packages). Hierarchical
+// lookup stays enabled; nodeModulesPaths above remains as an explicit
+// fallback for the hoisted workspace deps (@light/shared-types etc.).
+config.resolver.disableHierarchicalLookup = false;
 
 module.exports = withNativeWind(config, { input: "./global.css" });
