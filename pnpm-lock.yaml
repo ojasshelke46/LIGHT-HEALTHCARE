@@ -20,6 +20,9 @@ importers:
 
   apps/mobile:
     dependencies:
+      '@expo/vector-icons':
+        specifier: ~14.0.4
+        version: 14.0.4
       '@light/shared-types':
         specifier: workspace:*
         version: link:../../packages/shared-types
