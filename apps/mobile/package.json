@@ -1,0 +1,41 @@
+{
+  "name": "@light/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "export": "expo export --platform ios"
+  },
+  "dependencies": {
+    "@light/shared-types": "workspace:*",
+    "@react-native-async-storage/async-storage": "1.23.1",
+    "@supabase/supabase-js": "^2.47.10",
+    "date-fns": "^4.1.0",
+    "expo": "~52.0.0",
+    "expo-constants": "~17.0.0",
+    "expo-linking": "~7.0.0",
+    "expo-router": "~4.0.0",
+    "expo-status-bar": "~2.0.0",
+    "nativewind": "^4.1.23",
+    "react": "18.3.1",
+    "react-native": "0.76.9",
+    "react-native-gesture-handler": "~2.20.2",
+    "react-native-qrcode-svg": "^6.3.14",
+    "react-native-reanimated": "~3.16.1",
+    "react-native-safe-area-context": "4.12.0",
+    "react-native-screens": "~4.4.0",
+    "react-native-svg": "15.8.0",
+    "react-native-url-polyfill": "^2.0.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@types/react": "~18.3.12",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.3.3",
+    "vitest": "^2.1.8"
+  }
+}
