@@ -33,6 +33,9 @@ loadEnvLocal();
 export default defineConfig({
   testDir: "./e2e",
   timeout: 30_000,
+  // Specs share live seeded Supabase rows — parallel workers interfere
+  // (e.g. doctor-consult completes the appointment reception-queue counts).
+  workers: 1,
   use: { baseURL: "http://localhost:3000", trace: "on-first-retry" },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {

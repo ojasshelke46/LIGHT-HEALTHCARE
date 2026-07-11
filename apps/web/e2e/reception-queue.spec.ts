@@ -1,18 +1,44 @@
 import { test, expect } from "@playwright/test";
+import { createClient } from "@supabase/supabase-js";
+import type { Database } from "@light/shared-types";
 
 // Dev-only seed credentials — overridable via env, never production secrets.
 const EMAIL = process.env.E2E_RECEPTION_EMAIL ?? "reception@test.com";
 const PASSWORD = process.env.E2E_RECEPTION_PASSWORD ?? "Test1234!";
 
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
+
 // Seeded appointment ids (supabase/seed-dev.sql, section 3 "Appointments today"):
-const CHECK_IN_TARGET = "c0000000-0000-0000-0000-000000000001"; // Aarav Sharma, booked, today
-const PAST_NO_SHOW_TARGET = "c0000000-0000-0000-0000-000000000002"; // Diya Patel, booked, slot 2h in the past
+const CHECK_IN_TARGET = "c0000000-0000-0000-0000-000000000001"; // Aarav Sharma, booked, today 23:55 IST
+const PAST_NO_SHOW_TARGET = "c0000000-0000-0000-0000-000000000002"; // Diya Patel, booked, slot in the past
 
 // data-testid contract this spec locks in for Task 2/3 to wire exactly:
 // - queue-row-<appointmentId>  : wraps each row in the live queue
 // - check-in-btn               : visible on booked rows, flips status -> checked_in
 // - no-show-btn                : visible only on booked rows whose slot_time is in the past
 // - stat-checked-in            : wraps the numeric "checked in" value on the stats card
+
+/** Self-reset (D-43): restore the check-in target to `booked` before AND after
+ *  the suite so re-runs and later suites see canonical seed state. Reception
+ *  role has ALL on appointments. */
+async function resetCheckInTarget() {
+  const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const { error: authError } = await supabase.auth.signInWithPassword({
+    email: EMAIL,
+    password: PASSWORD,
+  });
+  if (authError) throw new Error(`reset auth failed: ${authError.message}`);
+  const { error } = await supabase
+    .from("appointments")
+    .update({ status: "booked" })
+    .eq("id", CHECK_IN_TARGET);
+  if (error) throw new Error(`reset update failed: ${error.message}`);
+  await supabase.auth.signOut();
+}
+
+test.beforeAll(resetCheckInTarget);
+test.afterAll(resetCheckInTarget);
 
 async function loginAsReception(page: import("@playwright/test").Page) {
   await page.goto("/login");
