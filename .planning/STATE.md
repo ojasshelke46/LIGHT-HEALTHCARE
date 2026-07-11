@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-05-PLAN.md
-last_updated: "2026-07-10T17:56:02.427Z"
-last_activity: 2026-07-10
+stopped_at: Phase 3 verified (23/33 reqs done)
+last_updated: "2026-07-11T15:20:43.714Z"
+last_activity: 2026-07-11
 progress:
   total_phases: 5
   completed_phases: 3
-  total_plans: 18
-  completed_plans: 18
-  percent: 100
+  total_plans: 22
+  completed_plans: 19
+  percent: 86
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** The live patient flow — book → check-in → consult → order tests → dispense → bill — works end-to-end in real time across every role portal without a page refresh.
-**Current focus:** Phase 03 — diagnostics-pharmacy-flow
+**Current focus:** Phase 04 — mobile-patient-app
 
 ## Current Position
 
-Phase: 03 (diagnostics-pharmacy-flow) — IN PROGRESS
-Plan: 5 of 5 (03-01 foundation complete: nav, getResultUrl/ResultLink, status/time helpers, doctor result-link refactor)
+Phase: 04 (mobile-patient-app) — EXECUTING
+Plan: 2 of 4
 Status: Ready to execute
-Last activity: 2026-07-10
+Last activity: 2026-07-11
 
-Progress: [██████████] 100%
+Progress: [█████████░] 86%
 
 ## Performance Metrics
 
@@ -69,6 +69,7 @@ Progress: [██████████] 100%
 | Phase 03 P02 | 10min | 3 tasks | 9 files |
 | Phase 03 P04 | 12min | 2 tasks | 4 files |
 | Phase 03 P05 | 25min | 3 tasks | 6 files |
+| Phase 04 P01 | 35min | 3 tasks | 24 files |
 
 ## Accumulated Context
 
@@ -122,6 +123,9 @@ Recent decisions affecting current work:
 - [Phase 03]: 03-05: e2e includes an extra add-medicine Sheet round-trip test (Date.now()-unique name, deleted in finally) beyond the plan's required inline-edit test -- add-medicine is a must_have truth and environment notes mandated unique names + deletion for spec-added medicines
 - [Phase 03]: 03-05: inline stock edit silently ignores invalid input (non-integer/negative) per plan wording, reverting the cell to display mode with no write -- the inventory cell is a fast counter-side control, not a form
 - [Phase 03]: 03-05: executed before 03-03 (wave 2, depends only on 03-01) matching the 02-08/03-04 out-of-sequence precedent -- 03-03 is the only Phase-3 plan remaining
+- [Phase 04]: 04-01: metro.config.js disableHierarchicalLookup corrected to false (not the D-46 recipe's literal true) -- this repo's pnpm store is isolated/non-hoisted, so a package's own transitive deps (@expo/metro-runtime, react-native-css-interop, @babel/runtime) need hierarchical lookup to resolve; disabling it broke expo export
+- [Phase 04]: 04-01: AUTH-04 left UNCHECKED in REQUIREMENTS.md -- phone-OTP is fully coded but untestable until an SMS provider is attached to the Supabase Phone provider; __DEV__ dev-login verified working against the seeded patient in the interim
+- [Phase 04]: 04-01: pnpm --filter @light/web typecheck failure (packages/ui Button forwardRef vs @types/react@19.2.17) confirmed pre-existing since the repo's first commit (2322691), unrelated to any apps/mobile file -- logged to deferred-items.md, not fixed (apps/web source is out of scope for this plan)
 
 ### Pending Todos
 
@@ -141,6 +145,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T17:49:57.762Z
-Stopped at: Completed 03-05-PLAN.md
+Last session: 2026-07-11T15:20:43.708Z
+Stopped at: Phase 3 verified (23/33 reqs done)
 Resume file: None
