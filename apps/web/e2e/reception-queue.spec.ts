@@ -19,26 +19,61 @@ const PAST_NO_SHOW_TARGET = "c0000000-0000-0000-0000-000000000002"; // Diya Pate
 // - no-show-btn                : visible only on booked rows whose slot_time is in the past
 // - stat-checked-in            : wraps the numeric "checked in" value on the stats card
 
-/** Self-reset (D-43): restore the check-in target to `booked` before AND after
- *  the suite so re-runs and later suites see canonical seed state. Reception
- *  role has ALL on appointments. */
-async function resetCheckInTarget() {
+const IST_OFFSET_MS = 5.5 * 60 * 60 * 1000;
+
+/** ISO instant for `HH:MM` today in IST — slots must live inside the queue's
+ *  IST "today" window regardless of when the suite runs (date rollover broke
+ *  fixed seed times repeatedly). */
+function todayISTAt(hours: number, minutes: number): string {
+  const nowIST = new Date(Date.now() + IST_OFFSET_MS);
+  const startOfDayUTC =
+    Date.UTC(
+      nowIST.getUTCFullYear(),
+      nowIST.getUTCMonth(),
+      nowIST.getUTCDate(),
+    ) - IST_OFFSET_MS;
+  return new Date(
+    startOfDayUTC + hours * 3_600_000 + minutes * 60_000,
+  ).toISOString();
+}
+
+/** Self-reset (D-43): restore BOTH seed targets — status AND slot_time — so
+ *  re-runs, date rollovers, and drift from other suites can't break this
+ *  spec. Reception role has ALL on appointments. */
+async function resetSeedTargets() {
   const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY);
   const { error: authError } = await supabase.auth.signInWithPassword({
     email: EMAIL,
     password: PASSWORD,
   });
   if (authError) throw new Error(`reset auth failed: ${authError.message}`);
-  const { error } = await supabase
+
+  // Check-in target: booked, slot 23:55 IST today (always future in-window).
+  const r1 = await supabase
     .from("appointments")
-    .update({ status: "booked" })
+    .update({ status: "booked", slot_time: todayISTAt(23, 55) })
     .eq("id", CHECK_IN_TARGET);
-  if (error) throw new Error(`reset update failed: ${error.message}`);
+  if (r1.error) throw new Error(`reset check-in target failed: ${r1.error.message}`);
+
+  // No-show target: booked, slot in the past but inside today IST —
+  // max(00:05 IST today, now - 2h).
+  const pastSlot = new Date(
+    Math.max(
+      Date.now() - 2 * 3_600_000,
+      new Date(todayISTAt(0, 5)).getTime(),
+    ),
+  ).toISOString();
+  const r2 = await supabase
+    .from("appointments")
+    .update({ status: "booked", slot_time: pastSlot })
+    .eq("id", PAST_NO_SHOW_TARGET);
+  if (r2.error) throw new Error(`reset no-show target failed: ${r2.error.message}`);
+
   await supabase.auth.signOut();
 }
 
-test.beforeAll(resetCheckInTarget);
-test.afterAll(resetCheckInTarget);
+test.beforeAll(resetSeedTargets);
+test.afterAll(resetSeedTargets);
 
 async function loginAsReception(page: import("@playwright/test").Page) {
   await page.goto("/login");

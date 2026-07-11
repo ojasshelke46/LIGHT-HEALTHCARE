@@ -31,6 +31,14 @@ async function loginAsPharmacist(page: Page) {
 }
 
 test.describe("pharmacy inventory (PHARM-03)", () => {
+  // Safety net beyond per-test finally blocks (D-43): restore the seeded
+  // Cetirizine stock even if a test flakes before its own cleanup runs.
+  test.afterEach(async () => {
+    const supabase = await pharmacistClient();
+    await supabase.from("medicines").update({ stock_qty: 200 }).eq("id", MEDICINE_ID);
+    await supabase.auth.signOut();
+  });
+
   test("pharmacist inline-edits a medicine's stock", async ({ page }) => {
     await loginAsPharmacist(page);
     await page.goto("/pharmacy/inventory");

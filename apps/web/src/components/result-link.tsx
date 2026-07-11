@@ -25,7 +25,10 @@ export function ResultLink({ pathOrUrl }: { pathOrUrl: string | null }) {
       toast.error("Could not open result");
       return;
     }
-    window.open(url, "_blank", "noopener,noreferrer");
+    // window.open after an await can be popup-blocked — fall back to
+    // same-tab navigation instead of failing silently.
+    const win = window.open(url, "_blank", "noopener,noreferrer");
+    if (!win) window.location.assign(url);
   }
 
   return (

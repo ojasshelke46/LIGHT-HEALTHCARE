@@ -23,10 +23,12 @@ const schema = z.object({
   name: z.string().min(1, "Name required"),
   stock_qty: z.coerce.number().int("Whole number").min(0),
   unit: z.string().min(1).default("tablet"),
+  // String-based decimal check — float math (n*100) misrejects values like
+  // 19.99 whose binary representation isn't exact.
   unit_price: z.coerce
     .number()
     .min(0)
-    .refine((n) => Math.round(n * 100) === n * 100, "Max two decimals"),
+    .refine((n) => /^\d+(\.\d{1,2})?$/.test(String(n)), "Max two decimals"),
   low_stock_threshold: z.coerce.number().int().min(0),
 });
 

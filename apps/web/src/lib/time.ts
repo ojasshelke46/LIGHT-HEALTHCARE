@@ -16,10 +16,14 @@ export function todayISTRange(): { startISO: string; endISO: string } {
   return { startISO: startUTC.toISOString(), endISO: endUTC.toISOString() };
 }
 
-/** Start-of-IST-day UTC instant for a YYYY-MM-DD date-input value. */
-function istDayStart(dateStr: string): Date {
+/** Start-of-IST-day UTC instant for a YYYY-MM-DD date-input value, or null
+ *  when the value is malformed (query params are user-editable — a bad date
+ *  must not 500 the page). */
+function istDayStart(dateStr: string): Date | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return null;
   const [y, m, d] = dateStr.split("-").map(Number);
-  return new Date(Date.UTC(y!, m! - 1, d!) - IST_OFFSET_MS);
+  const date = new Date(Date.UTC(y!, m! - 1, d!) - IST_OFFSET_MS);
+  return Number.isNaN(date.getTime()) ? null : date;
 }
 
 /**
@@ -35,9 +39,12 @@ export function istRangeFromDates(
   from?: string | null,
   to?: string | null,
 ): { startISO: string | null; endISO: string | null } {
-  const startISO = from ? istDayStart(from).toISOString() : null;
-  const endISO = to
-    ? new Date(istDayStart(to).getTime() + 24 * 60 * 60 * 1000).toISOString()
-    : null;
-  return { startISO, endISO };
+  const fromStart = from ? istDayStart(from) : null;
+  const toStart = to ? istDayStart(to) : null;
+  return {
+    startISO: fromStart ? fromStart.toISOString() : null,
+    endISO: toStart
+      ? new Date(toStart.getTime() + 24 * 60 * 60 * 1000).toISOString()
+      : null,
+  };
 }

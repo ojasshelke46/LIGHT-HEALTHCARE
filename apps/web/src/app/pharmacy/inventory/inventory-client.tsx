@@ -85,7 +85,10 @@ export function InventoryClient() {
     setEditValue("");
   }
 
-  async function saveEdit(id: string) {
+  async function saveEdit(id: string, expectedStock: number) {
+    // Re-entrancy guard: Enter triggers saveEdit, which disables the input,
+    // which fires blur → a second saveEdit for the same edit.
+    if (saving) return;
     const n = Number.parseInt(editValue, 10);
     // Invalid input is silently ignored (no write) — revert to display mode.
     if (!Number.isInteger(n) || n < 0) {
@@ -94,10 +97,14 @@ export function InventoryClient() {
     }
     setSaving(true);
     const supabase = createClient();
-    const { error: updateError } = await supabase
+    // Compare-and-swap on the stock value seen when editing began, so a
+    // concurrent dispense_medicine decrement is never silently clobbered.
+    const { data: updated, error: updateError } = await supabase
       .from("medicines")
       .update({ stock_qty: n })
-      .eq("id", id);
+      .eq("id", id)
+      .eq("stock_qty", expectedStock)
+      .select("id");
     setSaving(false);
     setEditingId(null);
     setEditValue("");
@@ -106,14 +113,23 @@ export function InventoryClient() {
       toast.error("Could not update stock");
       return;
     }
+    if ((updated ?? []).length === 0) {
+      toast.error("Stock changed while you were editing — refreshed, try again");
+      refetch();
+      return;
+    }
     toast.success("Stock updated");
     refetch();
   }
 
-  function onStockKeyDown(event: KeyboardEvent<HTMLInputElement>, id: string) {
+  function onStockKeyDown(
+    event: KeyboardEvent<HTMLInputElement>,
+    id: string,
+    expectedStock: number,
+  ) {
     if (event.key === "Enter") {
       event.preventDefault();
-      void saveEdit(id);
+      void saveEdit(id, expectedStock);
     } else if (event.key === "Escape") {
       event.preventDefault();
       cancelEdit();
@@ -207,8 +223,10 @@ export function InventoryClient() {
                         disabled={saving}
                         className="h-8 w-24"
                         onChange={(event) => setEditValue(event.target.value)}
-                        onBlur={() => void saveEdit(m.id)}
-                        onKeyDown={(event) => onStockKeyDown(event, m.id)}
+                        onBlur={() => void saveEdit(m.id, m.stock_qty ?? 0)}
+                        onKeyDown={(event) =>
+                          onStockKeyDown(event, m.id, m.stock_qty ?? 0)
+                        }
                       />
                     ) : (
                       <button

@@ -50,6 +50,20 @@ function waitForDispenseRpc(page: Page) {
 }
 
 test.describe("pharmacy dispense (PHARM-01/02)", () => {
+  // Safety net beyond the per-test finally blocks: if a test flakes between
+  // its UI mutation and the finally, this still restores the shared seed
+  // rows (the seed-drift failure D-43 exists to prevent).
+  test.afterEach(async () => {
+    const supabase = await pharmacistClient();
+    await supabase
+      .from("prescriptions")
+      .update({ status: "pending", dispensed_at: null })
+      .eq("id", RX_ID);
+    await supabase.from("medicines").update({ stock_qty: 120 }).eq("id", MEDICINE_ID);
+    await supabase.from("prescriptions").delete().eq("id", TEMP_RX_ID);
+    await supabase.auth.signOut();
+  });
+
   test("pharmacist dispenses a pending prescription atomically (stock 120 -> 110)", async ({
     page,
   }) => {
