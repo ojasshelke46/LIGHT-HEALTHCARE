@@ -52,7 +52,7 @@ Source: HMS build brief (2026-07-09). Auto-scoped: every feature in the brief is
 - [x] **MOB-02**: Patient can book: department → doctor (with specialization) → free slot → confirm (creates appointment, marks slot booked) → QR code of appointment id
 - [x] **MOB-03**: Patient sees their appointments (upcoming first) with status badges and per-appointment QR for check-in
 - [x] **MOB-04**: Patient sees visit reports grouped by visit date: diagnosis, test results with file viewer, prescriptions
-- [ ] **MOB-05**: Patient can view and edit profile details incl. ABHA ID
+- [x] **MOB-05**: Patient can view and edit profile details incl. ABHA ID
 
 ### AI Services
 

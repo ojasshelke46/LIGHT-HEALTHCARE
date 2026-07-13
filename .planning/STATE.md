@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 04-03-PLAN.md
-last_updated: "2026-07-13T18:04:13.415Z"
+status: verifying
+stopped_at: 04-03 done; patient read policies applied+verified
+last_updated: "2026-07-13T22:26:22.844Z"
 last_activity: 2026-07-13
 progress:
   total_phases: 5
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 22
-  completed_plans: 21
-  percent: 95
+  completed_plans: 22
+  percent: 100
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 04 (mobile-patient-app) — EXECUTING
-Plan: 3 of 4
-Status: Ready to execute
+Plan: 4 of 4
+Status: Phase complete — ready for verification
 Last activity: 2026-07-13
 
-Progress: [██████████] 95%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -71,6 +71,7 @@ Progress: [██████████] 95%
 | Phase 03 P05 | 25min | 3 tasks | 6 files |
 | Phase 04 P01 | 35min | 3 tasks | 24 files |
 | Phase 04 P03 | 16min | 3 tasks | 6 files |
+| Phase 04 P04 | 15min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -129,6 +130,8 @@ Recent decisions affecting current work:
 - [Phase 04]: 04-01: pnpm --filter @light/web typecheck failure (packages/ui Button forwardRef vs @types/react@19.2.17) confirmed pre-existing since the repo's first commit (2322691), unrelated to any apps/mobile file -- logged to deferred-items.md, not fixed (apps/web source is out of scope for this plan)
 - [Phase 04]: 04-03: Cast the 3-level-deep nested visits->orders/prescriptions->medicine PostgREST embed through 'as unknown as VisitWithDetails[]' -- deeper nesting collapses TS inference to a literal GenericStringError shape that rejects a direct cast
 - [Phase 04]: 04-03: Live REST verification found patient sessions cannot read staff or medicines via RLS (both silently return null/empty, no error) -- doctor/medicine names fall back to generic labels app-wide (Home/Booking/Appointments/Reports); wrote but did NOT apply supabase/migrations/20260713_patient_staff_doctor_select.sql (least-privilege patient reads), logged as a blocker rather than self-applying an auth/RLS boundary change without service-role access
+- [Phase 04]: 04-04: Narrowed patient into activePatient const after the early-return null guard -- nested closures (onSave/setField) don't retain TS control-flow narrowing from the outer if(!patient) return
+- [Phase 04]: 04-04: Live-verified patients_self_update RLS is deployed (PATCH + restore via dev patient REST token against the seeded row) -- the plan's flagged backend-precondition uncertainty resolved positive, no migration needed unlike 04-03's staff/medicines gap
 
 ### Pending Todos
 
@@ -136,7 +139,7 @@ None yet.
 
 ### Blockers/Concerns
 
-- Patient sessions cannot read staff or medicines via RLS -- doctor/medicine names render as generic fallback labels across Home/Booking/Appointments/Reports tabs; migration proposed at supabase/migrations/20260713_patient_staff_doctor_select.sql, NOT yet applied to the cloud project (needs service-role/dashboard access). See deferred-items.md items 2-3.
+None currently open. (Resolved: patient sessions couldn't read staff/medicines via RLS -- fixed by applying supabase/migrations/20260713_patient_staff_doctor_select.sql on 2026-07-13, commit e0cf2b6, verified via patient-token REST. See deferred-items.md items 2-3 for original root cause.)
 
 ## Deferred Items
 
@@ -148,6 +151,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-13T18:04:13.410Z
-Stopped at: Completed 04-03-PLAN.md
+Last session: 2026-07-13T22:26:22.839Z
+Stopped at: 04-03 done; patient read policies applied+verified
 Resume file: None
