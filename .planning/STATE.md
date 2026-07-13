@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: 04-03 done; patient read policies applied+verified
-last_updated: "2026-07-13T22:26:22.844Z"
+stopped_at: 05-01 done; AI services FastAPI mocks + Dockerfile shipped, AI-01..04 complete
+last_updated: "2026-07-13T22:54:21.819Z"
 last_activity: 2026-07-13
 progress:
   total_phases: 5
-  completed_phases: 4
-  total_plans: 22
-  completed_plans: 22
+  completed_phases: 5
+  total_plans: 23
+  completed_plans: 23
   percent: 100
 ---
 
@@ -21,12 +21,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** The live patient flow — book → check-in → consult → order tests → dispense → bill — works end-to-end in real time across every role portal without a page refresh.
-**Current focus:** Phase 04 — mobile-patient-app
+**Current focus:** Phase 05 — ai-services
 
 ## Current Position
 
-Phase: 04 (mobile-patient-app) — EXECUTING
-Plan: 4 of 4
+Phase: 05 (ai-services) — EXECUTING
+Plan: 1 of 1
 Status: Phase complete — ready for verification
 Last activity: 2026-07-13
 
@@ -72,6 +72,7 @@ Progress: [██████████] 100%
 | Phase 04 P01 | 35min | 3 tasks | 24 files |
 | Phase 04 P03 | 16min | 3 tasks | 6 files |
 | Phase 04 P04 | 15min | 2 tasks | 3 files |
+| Phase 05 P01 | 15min | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -132,6 +133,9 @@ Recent decisions affecting current work:
 - [Phase 04]: 04-03: Live REST verification found patient sessions cannot read staff or medicines via RLS (both silently return null/empty, no error) -- doctor/medicine names fall back to generic labels app-wide (Home/Booking/Appointments/Reports); wrote but did NOT apply supabase/migrations/20260713_patient_staff_doctor_select.sql (least-privilege patient reads), logged as a blocker rather than self-applying an auth/RLS boundary change without service-role access
 - [Phase 04]: 04-04: Narrowed patient into activePatient const after the early-return null guard -- nested closures (onSave/setField) don't retain TS control-flow narrowing from the outer if(!patient) return
 - [Phase 04]: 04-04: Live-verified patients_self_update RLS is deployed (PATCH + restore via dev patient REST token against the seeded row) -- the plan's flagged backend-precondition uncertainty resolved positive, no migration needed unlike 04-03's staff/medicines gap
+- [Phase 05]: 05-01: Kept mock logic deterministic and keyword/table-driven (not one static blob) per D-57 -- triage uses an ordered keyword->department/urgency map with a pediatric-age boost; drug-check uses a frozenset-keyed known-pairs table; scribe echoes the audio filename into every field.
+- [Phase 05]: 05-01: requirements-dev.txt (pytest) added even though not listed in the plan's files_modified frontmatter -- explicitly required by Task 2's action text, treated as in-scope rather than a deviation.
+- [Phase 05]: 05-01: Docker build skipped -- no Docker daemon available in this environment; Dockerfile authored to spec (python:3.12-slim, non-root user, no --reload) and hand-reviewed but not build-verified.
 
 ### Pending Todos
 
@@ -151,6 +155,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-13T22:26:22.839Z
-Stopped at: 04-03 done; patient read policies applied+verified
+Last session: 2026-07-13T22:54:21.812Z
+Stopped at: 05-01 done; AI services FastAPI mocks + Dockerfile shipped, AI-01..04 complete
 Resume file: None

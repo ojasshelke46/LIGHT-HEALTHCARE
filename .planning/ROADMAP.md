@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 2: Reception & Doctor Flow** - Reception runs the live queue/registry/billing; doctors consult, order, and prescribe in real time
 - [ ] **Phase 3: Diagnostics & Pharmacy Flow** - Diagnostics fulfills test orders; pharmacy dispenses atomically against live stock
 - [ ] **Phase 4: Mobile Patient App** - Patients authenticate via OTP, book appointments, and view their care history
-- [ ] **Phase 5: AI Services** - FastAPI ships typed mock endpoints for triage, drug-check, and scribe, container-ready
+- [x] **Phase 5: AI Services** - FastAPI ships typed mock endpoints for triage, drug-check, and scribe, container-ready (completed 2026-07-13)
 
 ## Phase Details
 
@@ -112,7 +112,9 @@ Plans:
   2. POST /api/drug-check accepts {current_medicines[], new_medicine} and returns a typed {safe, interactions[]}
   3. POST /api/scribe accepts {audio_url} and returns a typed SOAP-structured note
   4. Service exposes /health and CORS, and builds into a production Docker image (python 3.12-slim, uvicorn)
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [x] 05-01-PLAN.md — FastAPI app + three typed mock AI endpoints (triage, drug-check, scribe) + production Dockerfile (AI-01, AI-02, AI-03, AI-04)
 
 ## Progress
 
@@ -125,5 +127,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Reception & Doctor Flow | 0/8 | Planned | - |
 | 3. Diagnostics & Pharmacy Flow | 0/5 | Planned | - |
 | 4. Mobile Patient App | 0/4 | Planned | - |
-| 5. AI Services | 0/TBD | Not started | - |
+| 5. AI Services | 1/1 | Complete   | 2026-07-13 |
 </content>

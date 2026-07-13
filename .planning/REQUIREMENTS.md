@@ -56,10 +56,10 @@ Source: HMS build brief (2026-07-09). Auto-scoped: every feature in the brief is
 
 ### AI Services
 
-- [ ] **AI-01**: POST /api/triage accepts {symptoms, patient_age, patient_gender} and returns typed {suggested_department, urgency, reasoning} (mock)
-- [ ] **AI-02**: POST /api/drug-check accepts {current_medicines[], new_medicine} and returns typed {safe, interactions[]} (mock)
-- [ ] **AI-03**: POST /api/scribe accepts {audio_url} and returns typed SOAP-structured note (mock)
-- [ ] **AI-04**: Service ships with CORS, /health, production Dockerfile (python 3.12-slim, uvicorn)
+- [x] **AI-01**: POST /api/triage accepts {symptoms, patient_age, patient_gender} and returns typed {suggested_department, urgency, reasoning} (mock)
+- [x] **AI-02**: POST /api/drug-check accepts {current_medicines[], new_medicine} and returns typed {safe, interactions[]} (mock)
+- [x] **AI-03**: POST /api/scribe accepts {audio_url} and returns typed SOAP-structured note (mock)
+- [x] **AI-04**: Service ships with CORS, /health, production Dockerfile (python 3.12-slim, uvicorn)
 
 ## v2 Requirements
 
