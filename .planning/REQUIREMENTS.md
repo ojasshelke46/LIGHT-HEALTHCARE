@@ -48,8 +48,8 @@ Source: HMS build brief (2026-07-09). Auto-scoped: every feature in the brief is
 
 ### Mobile (Patient App)
 
-- [ ] **MOB-01**: Patient sees home screen with upcoming appointment card and quick actions
-- [ ] **MOB-02**: Patient can book: department → doctor (with specialization) → free slot → confirm (creates appointment, marks slot booked) → QR code of appointment id
+- [x] **MOB-01**: Patient sees home screen with upcoming appointment card and quick actions
+- [x] **MOB-02**: Patient can book: department → doctor (with specialization) → free slot → confirm (creates appointment, marks slot booked) → QR code of appointment id
 - [ ] **MOB-03**: Patient sees their appointments (upcoming first) with status badges and per-appointment QR for check-in
 - [ ] **MOB-04**: Patient sees visit reports grouped by visit date: diagnosis, test results with file viewer, prescriptions
 - [ ] **MOB-05**: Patient can view and edit profile details incl. ABHA ID

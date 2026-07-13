@@ -97,7 +97,7 @@ Plans:
 **Plans**: 4 plans
 Plans:
 - [x] 04-01-PLAN.md — Scaffold (Expo SDK 52 + expo-router + NativeWind, pnpm monorepo) + session gate + phone-OTP/__DEV__ auth + patient-row provisioning (AUTH-04)
-- [ ] 04-02-PLAN.md — Home (next-appointment card + quick actions) + Booking wizard (dept -> doctor -> slot -> atomic book_appointment RPC -> QR) (MOB-01, MOB-02)
+- [x] 04-02-PLAN.md — Home (next-appointment card + quick actions) + Booking wizard (dept -> doctor -> slot -> atomic book_appointment RPC -> QR) (MOB-01, MOB-02)
 - [ ] 04-03-PLAN.md — Appointments (upcoming-first + per-appointment QR modal) + Reports (visits grouped by date, signed-URL file viewer, prescriptions) (MOB-03, MOB-04)
 - [ ] 04-04-PLAN.md — Profile view/edit (name/email/address/ABHA, phone read-only) via self-scoped patients update (MOB-05)
 **UI hint**: yes
