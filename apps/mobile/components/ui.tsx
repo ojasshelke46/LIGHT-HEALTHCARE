@@ -1,6 +1,8 @@
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import {
   ActivityIndicator,
+  Animated,
+  Easing,
   Pressable,
   Text,
   TextInput,
@@ -18,9 +20,43 @@ export function Screen({ children }: { children: ReactNode }) {
   );
 }
 
-/** Pulsing placeholder block for loading states. */
+/**
+ * Pulsing placeholder block for loading states.
+ * Pulse uses RN's core Animated API — NativeWind's `animate-pulse` maps to a
+ * Reanimated animated style, which crashes plain function components on
+ * SDK 54 / Reanimated 4 ("passing an animation style to a function
+ * component `View`").
+ */
 export function Skeleton({ className = "h-4 w-full" }: { className?: string }) {
-  return <View className={`animate-pulse rounded-md bg-slate-200 ${className}`} />;
+  const opacity = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    const loop = Animated.loop(
+      Animated.sequence([
+        Animated.timing(opacity, {
+          toValue: 0.5,
+          duration: 700,
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacity, {
+          toValue: 1,
+          duration: 700,
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: true,
+        }),
+      ]),
+    );
+    loop.start();
+    return () => loop.stop();
+  }, [opacity]);
+
+  return (
+    <Animated.View
+      style={{ opacity }}
+      className={`rounded-md bg-slate-200 ${className}`}
+    />
+  );
 }
 
 /** Empty-state block: a title + optional hint, centered. */
