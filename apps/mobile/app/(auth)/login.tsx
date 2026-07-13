@@ -45,6 +45,7 @@ export default function LoginScreen() {
       : null;
 
   async function onSendCode() {
+    if (sendingCode) return; // re-entrancy guard against double-tap
     if (!normalizedPreview) return; // defense-in-depth; button is disabled
 
     setSendingCode(true);
@@ -64,6 +65,7 @@ export default function LoginScreen() {
   }
 
   async function onVerifyCode() {
+    if (verifying) return; // re-entrancy guard against double-tap
     setCodeError(null);
     const parsed = codeSchema.safeParse(code);
     if (!parsed.success) {

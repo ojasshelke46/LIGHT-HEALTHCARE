@@ -73,6 +73,7 @@ export default function ProfileScreen() {
   }
 
   async function onSave() {
+    if (saving) return; // re-entrancy guard against double-tap
     setErrors({});
     const parsed = profileSchema.safeParse(form);
     if (!parsed.success) {

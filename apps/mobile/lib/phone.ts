@@ -9,11 +9,12 @@
 export function normalizePhone(raw: string): string | null {
   const stripped = raw.replace(/[\s-]/g, "");
 
-  if (/^\+91\d{10}$/.test(stripped)) {
+  // Indian mobile numbers start with 6-9.
+  if (/^\+91[6-9]\d{9}$/.test(stripped)) {
     return stripped;
   }
 
-  if (/^\d{10}$/.test(stripped)) {
+  if (/^[6-9]\d{9}$/.test(stripped)) {
     return `+91${stripped}`;
   }
 

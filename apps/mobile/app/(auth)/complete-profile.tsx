@@ -5,7 +5,9 @@ import { supabase } from "@/lib/supabase";
 import { useSession } from "@/lib/session";
 import { Button, Field, Screen } from "@/components/ui";
 
-const nameSchema = z.object({ name: z.string().min(1, "Name is required") });
+const nameSchema = z.object({
+  name: z.string().trim().min(1, "Name is required"),
+});
 
 /**
  * First-run patient-row creation (D-49). Fires only for a brand-new
@@ -23,6 +25,10 @@ export default function CompleteProfileScreen() {
   const authPhone = session?.user.phone || session?.user.email || "";
 
   async function onSubmit() {
+    // Re-entrancy guard: a rapid double-tap must not race two inserts past
+    // the existing-row check (the DB's unique auth_user_id would reject the
+    // second one, but we shouldn't surface that as an error to the user).
+    if (saving) return;
     setNameError(null);
     const parsed = nameSchema.safeParse({ name });
     if (!parsed.success) {
@@ -56,6 +62,12 @@ export default function CompleteProfileScreen() {
     setSaving(false);
 
     if (error) {
+      // 23505 = unique violation on auth_user_id: a concurrent submit
+      // already created the row — treat as success and refresh.
+      if (error.code === "23505") {
+        await refreshPatient();
+        return;
+      }
       Alert.alert(
         "Could not save profile",
         "Please try again in a moment.",
