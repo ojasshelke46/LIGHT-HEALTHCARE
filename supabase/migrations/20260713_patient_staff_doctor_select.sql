@@ -1,4 +1,6 @@
--- PROPOSED, NOT YET APPLIED to cloud project rylceydkrydmpysmibba.
+-- APPLIED to cloud project rylceydkrydmpysmibba on 2026-07-13 (via MCP,
+-- orchestrator-reviewed). Verified: patient token sees ONLY doctor staff
+-- rows and the medicine catalog; other staff roles remain hidden.
 -- Written by the 04-03 executor (Rule-4 style deviation: RLS/security
 -- change is out of this plan's apps/mobile-only file scope and requires
 -- service-role/dashboard access the executor does not hold in-sandbox).
