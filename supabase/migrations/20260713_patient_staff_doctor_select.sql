@@ -25,3 +25,18 @@ create policy staff_patient_doctor_select on public.staff
     role = 'doctor'
     and public.current_patient_id() is not null
   );
+
+-- Second finding, same session, same root cause shape: `medicines` has NO
+-- patient-select policy either (live-verified: GET /rest/v1/medicines as
+-- the patient token returns 200 with an empty array, same silent-null
+-- pattern as staff above), so the Reports tab's
+-- `prescriptions(...,medicine:medicines(name))` embed (MOB-04, 04-03) will
+-- never resolve a medicine name for a patient session — the app's
+-- `?? "Medicine"` fallback again masks this instead of erroring. Medicine
+-- names carry no more sensitivity than a department/doctor name (already
+-- publicly selectable), so this grants any signed-in patient read access,
+-- mirroring the departments_public_select precedent rather than restricting
+-- further.
+create policy medicines_patient_select on public.medicines
+  for select
+  using (public.current_patient_id() is not null);
