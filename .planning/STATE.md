@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 3 verified (23/33 reqs done)
-last_updated: "2026-07-11T15:20:43.714Z"
-last_activity: 2026-07-11
+stopped_at: Completed 04-03-PLAN.md
+last_updated: "2026-07-13T18:04:13.415Z"
+last_activity: 2026-07-13
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 22
-  completed_plans: 19
-  percent: 86
+  completed_plans: 21
+  percent: 95
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 04 (mobile-patient-app) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
-Last activity: 2026-07-11
+Last activity: 2026-07-13
 
-Progress: [█████████░] 86%
+Progress: [██████████] 95%
 
 ## Performance Metrics
 
@@ -70,6 +70,7 @@ Progress: [█████████░] 86%
 | Phase 03 P04 | 12min | 2 tasks | 4 files |
 | Phase 03 P05 | 25min | 3 tasks | 6 files |
 | Phase 04 P01 | 35min | 3 tasks | 24 files |
+| Phase 04 P03 | 16min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -126,6 +127,8 @@ Recent decisions affecting current work:
 - [Phase 04]: 04-01: metro.config.js disableHierarchicalLookup corrected to false (not the D-46 recipe's literal true) -- this repo's pnpm store is isolated/non-hoisted, so a package's own transitive deps (@expo/metro-runtime, react-native-css-interop, @babel/runtime) need hierarchical lookup to resolve; disabling it broke expo export
 - [Phase 04]: 04-01: AUTH-04 left UNCHECKED in REQUIREMENTS.md -- phone-OTP is fully coded but untestable until an SMS provider is attached to the Supabase Phone provider; __DEV__ dev-login verified working against the seeded patient in the interim
 - [Phase 04]: 04-01: pnpm --filter @light/web typecheck failure (packages/ui Button forwardRef vs @types/react@19.2.17) confirmed pre-existing since the repo's first commit (2322691), unrelated to any apps/mobile file -- logged to deferred-items.md, not fixed (apps/web source is out of scope for this plan)
+- [Phase 04]: 04-03: Cast the 3-level-deep nested visits->orders/prescriptions->medicine PostgREST embed through 'as unknown as VisitWithDetails[]' -- deeper nesting collapses TS inference to a literal GenericStringError shape that rejects a direct cast
+- [Phase 04]: 04-03: Live REST verification found patient sessions cannot read staff or medicines via RLS (both silently return null/empty, no error) -- doctor/medicine names fall back to generic labels app-wide (Home/Booking/Appointments/Reports); wrote but did NOT apply supabase/migrations/20260713_patient_staff_doctor_select.sql (least-privilege patient reads), logged as a blocker rather than self-applying an auth/RLS boundary change without service-role access
 
 ### Pending Todos
 
@@ -133,7 +136,7 @@ None yet.
 
 ### Blockers/Concerns
 
-None
+- Patient sessions cannot read staff or medicines via RLS -- doctor/medicine names render as generic fallback labels across Home/Booking/Appointments/Reports tabs; migration proposed at supabase/migrations/20260713_patient_staff_doctor_select.sql, NOT yet applied to the cloud project (needs service-role/dashboard access). See deferred-items.md items 2-3.
 
 ## Deferred Items
 
@@ -145,6 +148,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-11T15:20:43.708Z
-Stopped at: Phase 3 verified (23/33 reqs done)
+Last session: 2026-07-13T18:04:13.410Z
+Stopped at: Completed 04-03-PLAN.md
 Resume file: None
