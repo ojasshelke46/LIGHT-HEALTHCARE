@@ -1,45 +1,24 @@
 import "@/global.css";
-import { Redirect, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { View } from "react-native";
-import { AuthProvider, useSession } from "@/lib/session";
-import { Skeleton } from "@/components/ui";
+import { AuthProvider } from "@/lib/session";
 
-/** Root route gate (D-49): session + patient row decide where the user lands. */
-function RootGate() {
-  const { session, patient, loading } = useSession();
-
-  if (loading) {
-    return (
-      <View className="flex-1 items-center justify-center gap-3 bg-white p-6">
-        <Skeleton className="h-6 w-40" />
-        <Skeleton className="h-4 w-56" />
-        <Skeleton className="h-4 w-48" />
-      </View>
-    );
-  }
-
-  if (!session) {
-    return <Redirect href="/(auth)/login" />;
-  }
-
-  if (!patient) {
-    return <Redirect href="/(auth)/complete-profile" />;
-  }
-
-  return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(auth)" />
-      <Stack.Screen name="(tabs)" />
-    </Stack>
-  );
-}
-
+/**
+ * Root layout. The Stack navigator must ALWAYS mount — returning a
+ * <Redirect> in its place leaves expo-router with no navigator to act on,
+ * which blanks/flickers the app. Auth gating happens per group:
+ * app/index.tsx routes on session state; (auth)/_layout.tsx and
+ * (tabs)/_layout.tsx guard their own groups (D-49).
+ */
 export default function RootLayout() {
   return (
     <AuthProvider>
       <StatusBar style="dark" />
-      <RootGate />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(tabs)" />
+      </Stack>
     </AuthProvider>
   );
 }
